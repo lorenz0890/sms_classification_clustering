@@ -13,3 +13,6 @@ exclude = '''
   | __pycache__
 )/
 '''
+
+[tool.pylint.messages_control]
+disable = ["import-error"]
