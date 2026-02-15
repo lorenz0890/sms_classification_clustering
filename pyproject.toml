@@ -16,3 +16,6 @@ exclude = '''
 
 [tool.pylint.messages_control]
 disable = ["import-error"]
+
+[tool.pylint.master]
+extension-pkg-allow-list = ["numpy"]
