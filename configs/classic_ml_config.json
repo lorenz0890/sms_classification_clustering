@@ -1,0 +1,38 @@
+{
+  "package": "classic_ml",
+  "pipeline": [
+    "words",
+    "ngrams",
+    "classifier"
+  ],
+  "output_dir": "output",
+  "cache_dir": "classic_ml/cache",
+  "words": {
+    "path": "data/SMSSpamCollection",
+    "top": 25,
+    "remove_stopwords": true,
+    "output": "classic_words.png"
+  },
+  "ngrams": {
+    "path": "data/SMSSpamCollection",
+    "top": 25,
+    "n": 2,
+    "remove_stopwords": true,
+    "output": "classic_ngrams.png"
+  },
+  "classifier": {
+    "path": "data/SMSSpamCollection",
+    "test_ratio": 0.2,
+    "seed": 42,
+    "top_words": 2000,
+    "show_informative": 0,
+    "remove_stopwords": true,
+    "classifiers": [
+      "naive_bayes",
+      "svm",
+      "logistic_regression"
+    ],
+    "output": "classic_classifiers.png",
+    "results_output": "classic_classifier_results.json"
+  }
+}

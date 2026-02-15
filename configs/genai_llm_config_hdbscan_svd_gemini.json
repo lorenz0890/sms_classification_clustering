@@ -1,0 +1,62 @@
+{
+  "package": "genai_llm",
+  "pipeline": [
+    "embeddings",
+    "cluster",
+    "visualize",
+    "analyze"
+  ],
+  "output_dir": "output",
+  "embeddings": {
+    "path": "data/SMSSpamCollection",
+    "model": "models/gemini-embedding-001",
+    "batch_size": 100,
+    "limit": 0,
+    "output_npz": "sms_embeddings.npz",
+    "provider": "gemini",
+    "params": {
+      "task_type": "clustering",
+      "output_dimensionality": 384
+    }
+  },
+  "cluster": {
+    "input_embeddings": "sms_embeddings.npz",
+    "algorithm": "hdbscan",
+    "seed": 42,
+    "params": {
+      "min_samples": 10,
+      "min_cluster_size": 15,
+      "metric": "cosine"
+    },
+    "reduce": {
+      "algorithm": "svd",
+      "params": {},
+      "dims": 5
+    },
+    "output_npz": "sms_clusters.npz",
+    "output_tsv": "sms_clusters.tsv"
+  },
+  "visualize": {
+    "input": "sms_clusters.npz",
+    "reduce": {
+      "algorithm": "pca",
+      "params": {},
+      "dims": 2
+    },
+    "coords_source": "stored",
+    "output": "sms_clusters.png"
+  },
+  "analyze": {
+    "input": "sms_clusters.npz",
+    "reduce": {
+      "algorithm": "pca",
+      "params": {},
+      "dims": 2
+    },
+    "coords_source": "stored",
+    "output": "sms_clusters_ngrams.png",
+    "top_k": 3,
+    "n": 3,
+    "remove_stopwords": true
+  }
+}
