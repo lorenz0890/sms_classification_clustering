@@ -14,6 +14,14 @@ python3.11 -m venv .venv
 source .venv/bin/activate
 ```
 
+- If `python3.11` is not found (pyenv), set the local version and retry:
+
+```bash
+pyenv local 3.11.9
+python -m venv .venv
+source .venv/bin/activate
+```
+
 - Install dependencies:
 
 ```bash
@@ -105,7 +113,7 @@ Swap `_openai` for `_gemini` in the filenames to run Gemini-backed configs.
   - Output filenames include the clustering, reduction, and embedding provider names (e.g., `_hdbscan_pca_openai`).
   - Embedding cache filenames also include the provider to avoid mixing results.
   - Cluster metric reports are written to `genai_llm/cache` with `cluster_metrics_*` filenames.
-  - `run_all_configs.sh` aggregates these into `output/genai_cluster_comparison.csv` plus accuracy/F1/silhouette/coverage bar charts.
+  - `run_all_configs.sh` aggregates these into `output/genai_cluster_comparison.csv` plus accuracy/F1/silhouette bar charts.
   - Override `output_dir` in `configs/genai_llm_config_*.json` to change the visualization destination.
   - Override `cache_dir` to move embedding/cluster artifacts elsewhere.
 

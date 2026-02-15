@@ -27,8 +27,10 @@ class HDBSCANStrategy(ClusteringStrategy):
 
     def __init__(self, params: Dict[str, Any]) -> None:
         """Initialize the strategy with algorithm parameters."""
-        self._params = params
-        self._clusterer = HDBSCAN(**params)
+        cleaned = dict(params)
+        cleaned.setdefault("copy", False)
+        self._params = cleaned
+        self._clusterer = HDBSCAN(**cleaned)
 
     @property
     def name(self) -> str:

@@ -130,7 +130,6 @@ def _build_rows(
             "precision": primary.get("precision"),
             "recall": primary.get("recall"),
             "f1": primary.get("f1"),
-            "coverage": primary.get("coverage"),
             "label_in_cluster": primary.get("label_in_cluster"),
             "label_total": primary.get("label_total"),
             "cluster_size": primary.get("cluster_size"),
@@ -159,7 +158,6 @@ def _write_csv(rows: Sequence[Dict[str, Any]], output_path: pathlib.Path) -> Non
         "precision",
         "recall",
         "f1",
-        "coverage",
         "label_in_cluster",
         "label_total",
         "cluster_size",
@@ -248,7 +246,6 @@ def main() -> int:
     accuracy_path = output_dir / "genai_cluster_accuracy.png"
     f1_path = output_dir / "genai_cluster_f1.png"
     silhouette_path = output_dir / "genai_cluster_silhouette.png"
-    coverage_path = output_dir / "genai_cluster_coverage.png"
 
     if not _plot_metric(rows, "accuracy", accuracy_path):
         print(
@@ -258,11 +255,9 @@ def main() -> int:
         return 0
     _plot_metric(rows, "f1", f1_path)
     _plot_metric(rows, "silhouette", silhouette_path, y_min=-1.0, y_max=1.0)
-    _plot_metric(rows, "coverage", coverage_path)
     print(f"wrote {accuracy_path}")
     print(f"wrote {f1_path}")
     print(f"wrote {silhouette_path}")
-    print(f"wrote {coverage_path}")
     return 0
 
 

@@ -46,7 +46,6 @@ class ClusterSummary:
     precision: float
     recall: float
     f1: float
-    coverage: float
     label_in_cluster: int
     label_total: int
     cluster_size: int
@@ -60,7 +59,6 @@ class ClusterSummary:
             "precision": self.precision,
             "recall": self.recall,
             "f1": self.f1,
-            "coverage": self.coverage,
             "label_in_cluster": self.label_in_cluster,
             "label_total": self.label_total,
             "cluster_size": self.cluster_size,
@@ -112,7 +110,6 @@ def compute_cluster_metrics(
                 prec = precision_score(y_true, y_pred, zero_division=0)
                 rec = recall_score(y_true, y_pred, zero_division=0)
                 f1 = f1_score(y_true, y_pred, zero_division=0)
-                coverage = (label_in_cluster / label_total) if label_total else 0.0
                 cluster_size = int(np.sum(cluster_mask))
                 cluster_summaries.append(
                     ClusterSummary(
@@ -122,7 +119,6 @@ def compute_cluster_metrics(
                         precision=float(prec),
                         recall=float(rec),
                         f1=float(f1),
-                        coverage=float(coverage),
                         label_in_cluster=label_in_cluster,
                         label_total=label_total,
                         cluster_size=cluster_size,
@@ -133,8 +129,8 @@ def compute_cluster_metrics(
                     f"  acc={acc:.3f} prec={prec:.3f} rec={rec:.3f}"
                 )
                 cluster_metrics_lines.append(
-                    f"  f1={f1:.3f} coverage={coverage:.1%} "
-                    f"({label_in_cluster}/{label_total})"
+                    f"  f1={f1:.3f} label_in_cluster={label_in_cluster} "
+                    f"label_total={label_total}"
                 )
     return ClusterMetrics(
         silhouette_text=silhouette_text,
