@@ -1,4 +1,5 @@
 """Configuration models for the genai_llm package."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -61,7 +62,9 @@ class EmbeddingsConfig:
     batch_size: int = 128
     limit: int = 0
     output_npz: str = "sms_embeddings.npz"
-    params: dict = field(default_factory=lambda: dict(_DEFAULT_EMBEDDING_PARAMS["openai"]))
+    params: dict = field(
+        default_factory=lambda: dict(_DEFAULT_EMBEDDING_PARAMS["openai"])
+    )
 
     @classmethod
     def from_dict(cls, data: Mapping[str, Any]) -> "EmbeddingsConfig":

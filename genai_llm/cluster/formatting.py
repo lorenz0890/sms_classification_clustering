@@ -1,4 +1,5 @@
 """Formatting and naming helpers for cluster outputs."""
+
 from __future__ import annotations
 
 import pathlib
@@ -69,8 +70,8 @@ def format_embedding_label(metadata: Optional[Mapping[str, Any]]) -> str:
     if isinstance(metadata, Mapping):
         embedding_meta = metadata.get("embedding_metadata")
         if isinstance(embedding_meta, Mapping):
-            provider_name = (
-                embedding_meta.get("provider_name") or embedding_meta.get("provider")
+            provider_name = embedding_meta.get("provider_name") or embedding_meta.get(
+                "provider"
             )
     if not provider_name:
         return "Embeddings"

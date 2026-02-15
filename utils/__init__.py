@@ -11,6 +11,7 @@ from .validation import (
     require_ratio,
     require_str,
 )
+from .cache_utils import clear_dir
 
 __all__ = [
     "ensure_nltk_data",
@@ -22,4 +23,5 @@ __all__ = [
     "require_positive_int",
     "require_ratio",
     "require_str",
+    "clear_dir",
 ]

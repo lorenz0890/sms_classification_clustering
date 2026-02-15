@@ -1,4 +1,5 @@
 """Strategy pattern for clustering algorithms."""
+
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
@@ -75,7 +76,9 @@ class KMeansStrategy(ClusteringStrategy):
         return self._clusterer.fit_predict(data)
 
 
-def build_clustering_strategy(algorithm: str, params: Dict[str, Any]) -> ClusteringStrategy:
+def build_clustering_strategy(
+    algorithm: str, params: Dict[str, Any]
+) -> ClusteringStrategy:
     """Factory for clustering strategies based on algorithm name."""
     algo = algorithm.lower()
     if algo == "hdbscan":

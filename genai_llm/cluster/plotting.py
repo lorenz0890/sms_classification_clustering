@@ -1,4 +1,5 @@
 """Plotting helpers for cluster visualizations."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -89,8 +90,12 @@ class ClusterPlotter:
         self._plt.gca().add_artist(cluster_legend)
 
         shape_handles = [
-            self._plt.Line2D([0], [0], marker="o", color="k", linestyle="None", label="ham"),
-            self._plt.Line2D([0], [0], marker="x", color="k", linestyle="None", label="spam"),
+            self._plt.Line2D(
+                [0], [0], marker="o", color="k", linestyle="None", label="ham"
+            ),
+            self._plt.Line2D(
+                [0], [0], marker="x", color="k", linestyle="None", label="spam"
+            ),
         ]
         label_legend = self._plt.legend(
             handles=shape_handles,

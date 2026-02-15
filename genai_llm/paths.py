@@ -1,4 +1,5 @@
 """Path resolution helpers for genai_llm outputs and cache."""
+
 from __future__ import annotations
 
 import pathlib

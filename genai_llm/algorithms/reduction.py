@@ -1,4 +1,5 @@
 """Dimensionality reduction helpers for embeddings."""
+
 from __future__ import annotations
 
 from abc import ABC, abstractmethod

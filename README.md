@@ -20,6 +20,13 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+- Format and lint (optional):
+
+```bash
+black .
+flake8 .
+```
+
 - Dataset: place the SMS Spam Collection file at `data/SMSSpamCollection` (tab-separated `label<TAB>text`).
 
 - Set required environment variables for GenAI runs:
@@ -56,6 +63,10 @@ Swap `_openai` for `_gemini` in the filenames to run Gemini-backed configs.
 
 ```bash
 ./run_all_configs.sh
+./run_all_configs.sh --clean-cache
+./run_all_configs.sh --genai-provider openai
+./run_all_configs.sh --genai-provider gemini --clean-cache
+./run_all_configs.sh --configs-dir configs --clean-cache
 ```
 
 **Config Notes**
@@ -89,10 +100,12 @@ Swap `_openai` for `_gemini` in the filenames to run Gemini-backed configs.
 - GenAI outputs:
   - Embeddings and cluster artifacts are cached in `genai_llm/cache` by default.
   - Visualizations are written under the top-level `output` directory by default.
-  - Scatter plots are saved to `output/clusterings`.
-  - Annotated plots (with n-grams) are saved to `output/clusterings_annotated`.
+  - Scatter plots are saved to `output/clusters_visualized`.
+  - Annotated plots (with n-grams) are saved to `output/clusters_visualized_annotated`.
   - Output filenames include the clustering, reduction, and embedding provider names (e.g., `_hdbscan_pca_openai`).
   - Embedding cache filenames also include the provider to avoid mixing results.
+  - Cluster metric reports are written to `genai_llm/cache` with `cluster_metrics_*` filenames.
+  - `run_all_configs.sh` aggregates these into `output/genai_cluster_comparison.csv` plus accuracy/F1/silhouette/coverage bar charts.
   - Override `output_dir` in `configs/genai_llm_config_*.json` to change the visualization destination.
   - Override `cache_dir` to move embedding/cluster artifacts elsewhere.
 

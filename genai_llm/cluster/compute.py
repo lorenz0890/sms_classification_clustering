@@ -1,4 +1,5 @@
 """Cluster computation workflow for SMS embeddings."""
+
 from __future__ import annotations
 
 import csv
@@ -25,7 +26,9 @@ def write_tsv(
     with path.open("w", encoding="utf-8", newline="") as f:
         writer = csv.writer(f, delimiter="\t")
         writer.writerow(["label", "cluster", "x", "y", "text"])
-        for label, cluster_id, text, (x, y) in zip(labels, cluster_ids, texts, coords_2d):
+        for label, cluster_id, text, (x, y) in zip(
+            labels, cluster_ids, texts, coords_2d
+        ):
             writer.writerow([label, int(cluster_id), f"{x:.6f}", f"{y:.6f}", text])
 
 
@@ -36,7 +39,9 @@ class ClusterComputer:
         """Initialize the computer with configuration."""
         self._config = config
 
-    def _load_embedding_metadata(self, data: np.lib.npyio.NpzFile) -> Optional[Dict[str, object]]:
+    def _load_embedding_metadata(
+        self, data: np.lib.npyio.NpzFile
+    ) -> Optional[Dict[str, object]]:
         """Load metadata embedded in the embeddings file if available."""
         if "metadata" not in data:
             return None

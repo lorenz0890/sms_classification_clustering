@@ -1,0 +1,15 @@
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.venv
+  | venv
+  | build
+  | dist
+  | classic_ml/cache
+  | genai_llm/cache
+  | __pycache__
+)/
+'''

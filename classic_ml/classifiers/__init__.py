@@ -1,4 +1,5 @@
 """Classifier strategy registry for classic_ml."""
+
 from __future__ import annotations
 
 from typing import Dict, Type
@@ -15,6 +16,7 @@ _CLASSIFIER_REGISTRY: Dict[str, Type[ClassifierStrategy]] = {
     "svm": SVMStrategy,
     "logistic_regression": LogisticRegressionStrategy,
 }
+
 
 def build_classifier_strategy(classifier_id: str) -> ClassifierStrategy:
     """Build a classifier strategy by id."""

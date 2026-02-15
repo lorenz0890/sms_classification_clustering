@@ -1,7 +1,9 @@
 """Cluster n-gram analysis and annotated visualization."""
+
 from __future__ import annotations
 
 import collections
+import pathlib
 import sys
 from typing import Dict, List, Optional, Sequence, Tuple
 
@@ -21,6 +23,7 @@ from .formatting import (
 )
 from .metrics import compute_cluster_metrics
 from .plotting import ClusterPlotData, ClusterPlotter
+from .reporting import write_cluster_report
 
 
 NgramCounts = Dict[int, List[Tuple[Tuple[str, ...], int]]]
@@ -75,12 +78,18 @@ class ClusterNgramAnalyzer:
         return " ".join(gram)
 
     def _annotate_ngrams(
-        self, plt_module: object, coords: np.ndarray, cluster_ids: np.ndarray, ngrams: NgramCounts
+        self,
+        plt_module: object,
+        coords: np.ndarray,
+        cluster_ids: np.ndarray,
+        ngrams: NgramCounts,
     ) -> None:
         """Annotate cluster centers with top n-grams."""
         y_span = float(np.ptp(coords[:, 1])) if coords.size else 1.0
         line_offset = y_span * 0.02 if y_span > 0 else 0.1
-        all_counts = [count for grams in ngrams.values() for _, count in grams if count > 0]
+        all_counts = [
+            count for grams in ngrams.values() for _, count in grams if count > 0
+        ]
         min_count = min(all_counts) if all_counts else 1
         max_count = max(all_counts) if all_counts else 1
         min_font = 8.0
@@ -90,7 +99,9 @@ class ClusterNgramAnalyzer:
             """Scale font size based on count."""
             if max_count == min_count:
                 return (min_font + max_font) / 2
-            return min_font + (count - min_count) * (max_font - min_font) / (max_count - min_count)
+            return min_font + (count - min_count) * (max_font - min_font) / (
+                max_count - min_count
+            )
 
         for cluster_id, grams in ngrams.items():
             cluster_mask = cluster_ids == cluster_id
@@ -136,7 +147,10 @@ class ClusterNgramAnalyzer:
         try:
             import matplotlib.pyplot as plt
         except ImportError:
-            print("Missing matplotlib. Install it in your venv to generate plots.", file=sys.stderr)
+            print(
+                "Missing matplotlib. Install it in your venv to generate plots.",
+                file=sys.stderr,
+            )
             return 1
 
         remove_stopwords = self._config.remove_stopwords
@@ -153,7 +167,9 @@ class ClusterNgramAnalyzer:
 
         plt.figure(figsize=(9.72, 7.776))
         plot_data = ClusterPlotData(
-            coords=dataset.coords, cluster_ids=dataset.cluster_ids, labels=dataset.labels
+            coords=dataset.coords,
+            cluster_ids=dataset.cluster_ids,
+            labels=dataset.labels,
         )
         plotter = ClusterPlotter(plt, plot_data)
         plotter.draw_scatter()
@@ -162,31 +178,46 @@ class ClusterNgramAnalyzer:
         algorithm_id: Optional[str] = None
         if isinstance(dataset.metadata, dict):
             algorithm = dataset.metadata.get("cluster_algorithm") or algorithm
-            algorithm_id = (
-                dataset.metadata.get("cluster_algorithm_id")
-                or dataset.metadata.get("cluster_algorithm")
-            )
+            algorithm_id = dataset.metadata.get(
+                "cluster_algorithm_id"
+            ) or dataset.metadata.get("cluster_algorithm")
         reduction_id = resolve_reduction_id(
             self._config.coords_source, self._config.reduce.algorithm, dataset.metadata
         )
         provider_id = resolve_provider_id(dataset.metadata)
         reduction_name = format_reduction_name(reduction_id)
         embedding_label = format_embedding_label(dataset.metadata)
-        plt.title(
-            f"SMS Clusters ({algorithm} + {reduction_name} on {embedding_label})"
-        )
+        plt.title(f"SMS Clusters ({algorithm} + {reduction_name} on {embedding_label})")
         plt.xlabel("Component 1")
         plt.ylabel("Component 2")
 
-        metrics = compute_cluster_metrics(dataset.coords, dataset.cluster_ids, dataset.labels)
+        metrics = compute_cluster_metrics(
+            dataset.coords, dataset.cluster_ids, dataset.labels
+        )
         plotter.add_metrics_box(metrics.text())
-        self._annotate_ngrams(plt, dataset.coords, dataset.cluster_ids, ngrams_by_cluster)
+        self._annotate_ngrams(
+            plt, dataset.coords, dataset.cluster_ids, ngrams_by_cluster
+        )
 
         legends = plotter.add_legends()
         output_path = build_output_path(
             self._config.output, algorithm_id, reduction_id, provider_id
         )
         plotter.save(output_path, legends)
+        report_path = write_cluster_report(
+            cache_dir=pathlib.Path(self._config.input).parent,
+            metrics=metrics,
+            metadata=dataset.metadata,
+            coords_source=self._config.coords_source,
+            plot_reduce={
+                "algorithm": self._config.reduce.algorithm,
+                "params": self._config.reduce.params,
+                "dims": self._config.reduce.dims,
+            },
+            algorithm_id=algorithm_id,
+            reduction_id=reduction_id,
+            provider_id=provider_id,
+        )
 
         messages = (
             dataset.metadata.get("num_messages")
@@ -194,6 +225,9 @@ class ClusterNgramAnalyzer:
             else len(dataset.labels)
         )
         num_noise = int((dataset.cluster_ids == -1).sum())
-        print(f"messages={messages} clusters={len(plot_data.unique_clusters())} noise={num_noise}")
+        print(
+            f"messages={messages} clusters={len(plot_data.unique_clusters())} noise={num_noise}"
+        )
         print(f"wrote {output_path}")
+        print(f"wrote {report_path}")
         return 0

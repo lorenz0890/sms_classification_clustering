@@ -1,4 +1,5 @@
 """Facade for orchestrating genai_llm workflows."""
+
 from __future__ import annotations
 
 import pathlib
@@ -51,14 +52,16 @@ class GenaiLLMFacade:
             self._config.visualize.input
         )
         self._config.visualize.output = self._paths.resolve_output_path(
-            self._prepend_output_subdir(self._config.visualize.output, "clusterings")
+            self._prepend_output_subdir(
+                self._config.visualize.output, "clusters_visualized"
+            )
         )
         self._config.analyze.input = self._paths.resolve_cache_path(
             self._config.analyze.input
         )
         self._config.analyze.output = self._paths.resolve_output_path(
             self._prepend_output_subdir(
-                self._config.analyze.output, "clusterings_annotated"
+                self._config.analyze.output, "clusters_visualized_annotated"
             )
         )
 

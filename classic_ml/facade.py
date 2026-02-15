@@ -1,4 +1,5 @@
 """Facade for orchestrating classic_ml workflows."""
+
 from __future__ import annotations
 
 import pathlib
@@ -39,7 +40,9 @@ class ClassicMLFacade:
         cache_dir = pathlib.Path(self._config.cache_dir)
         cache_dir.mkdir(parents=True, exist_ok=True)
         self._config.words.output = self._resolve_output_path(self._config.words.output)
-        self._config.ngrams.output = self._resolve_output_path(self._config.ngrams.output)
+        self._config.ngrams.output = self._resolve_output_path(
+            self._config.ngrams.output
+        )
         self._config.classifier.output = self._resolve_output_path(
             self._config.classifier.output
         )

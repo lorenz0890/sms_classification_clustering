@@ -1,4 +1,5 @@
 """Utilities for loading clustering datasets."""
+
 from __future__ import annotations
 
 import json

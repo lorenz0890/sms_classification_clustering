@@ -1,4 +1,5 @@
 """Shared validation helpers for configuration objects."""
+
 from __future__ import annotations
 
 from typing import Any

@@ -1,4 +1,5 @@
 """Configuration models for the classic_ml package."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -142,9 +143,7 @@ class ClassifierConfig:
                 raise ValueError("classifier.classifiers must be a list of strings.")
             token = normalize_classifier_id(classifier_id)
             if token not in allowed:
-                raise ValueError(
-                    f"classifier.classifiers must be one of {allowed}."
-                )
+                raise ValueError(f"classifier.classifiers must be one of {allowed}.")
             normalized.append(token)
         self.classifiers = tuple(normalized)
         self.output = require_str(self.output, "classifier.output")

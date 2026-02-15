@@ -1,9 +1,12 @@
 """Embedding provider strategies."""
+
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
 import os
+import re
 import sys
+import time
 from typing import Any, Dict, Optional, Sequence
 
 import numpy as np
@@ -24,7 +27,9 @@ class EmbeddingProvider(ABC):
         """Return the provider display name."""
 
     @abstractmethod
-    def embed_texts(self, texts: Sequence[str], model: str, batch_size: int) -> np.ndarray:
+    def embed_texts(
+        self, texts: Sequence[str], model: str, batch_size: int
+    ) -> np.ndarray:
         """Embed texts using the configured provider."""
 
 
@@ -37,14 +42,20 @@ class OpenAIEmbeddingProvider(EmbeddingProvider):
     def __init__(self, api_key: str, params: Dict[str, Any]) -> None:
         """Initialize the provider with an API key and parameters."""
         self._client = OpenAI(api_key=api_key)
-        self._params = {key: value for key, value in params.items() if key != "api_key_env"}
+        self._params = {
+            key: value for key, value in params.items() if key != "api_key_env"
+        }
 
-    def embed_texts(self, texts: Sequence[str], model: str, batch_size: int) -> np.ndarray:
+    def embed_texts(
+        self, texts: Sequence[str], model: str, batch_size: int
+    ) -> np.ndarray:
         """Embed texts in batches using the OpenAI API."""
         embeddings: list[list[float]] = []
         for i in range(0, len(texts), batch_size):
             batch = texts[i : i + batch_size]
-            resp = self._client.embeddings.create(model=model, input=batch, **self._params)
+            resp = self._client.embeddings.create(
+                model=model, input=batch, **self._params
+            )
             embeddings.extend([item.embedding for item in resp.data])
         return np.array(embeddings, dtype=np.float32)
 
@@ -65,7 +76,13 @@ class GeminiEmbeddingProvider(EmbeddingProvider):
             ) from exc
         genai.configure(api_key=api_key)
         self._genai = genai
-        self._params = {key: value for key, value in params.items() if key != "api_key_env"}
+        cleaned_params = {
+            key: value for key, value in params.items() if key != "api_key_env"
+        }
+        self._max_retries = int(cleaned_params.pop("max_retries", 5))
+        self._retry_base_seconds = float(cleaned_params.pop("retry_base_seconds", 10.0))
+        self._retry_max_seconds = float(cleaned_params.pop("retry_max_seconds", 60.0))
+        self._params = cleaned_params
 
     def _extract_embeddings(self, response: Any) -> list[list[float]]:
         """Extract embedding vectors from a Gemini response."""
@@ -84,25 +101,83 @@ class GeminiEmbeddingProvider(EmbeddingProvider):
                 return [embedding]
         raise RuntimeError("Unexpected Gemini embedding response format.")
 
-    def embed_texts(self, texts: Sequence[str], model: str, batch_size: int) -> np.ndarray:
+    def _is_quota_error(self, exc: Exception) -> bool:
+        """Return True if the exception looks like a quota/rate-limit error."""
+        name = exc.__class__.__name__.lower()
+        message = str(exc).lower()
+        if "resourceexhausted" in name:
+            return True
+        if "quota" in message or "rate limit" in message or "429" in message:
+            return True
+        return False
+
+    def _retry_sleep(self, exc: Exception, attempt: int) -> float:
+        """Compute a sleep duration before retrying."""
+        message = str(exc)
+        match = re.search(r"retry in ([0-9.]+)s", message, re.IGNORECASE)
+        if match:
+            try:
+                return min(self._retry_max_seconds, float(match.group(1)))
+            except ValueError:
+                pass
+        delay = self._retry_base_seconds * (2**attempt)
+        return min(self._retry_max_seconds, delay)
+
+    def embed_texts(
+        self, texts: Sequence[str], model: str, batch_size: int
+    ) -> np.ndarray:
         """Embed texts in batches using the Gemini API."""
         embeddings: list[list[float]] = []
         for i in range(0, len(texts), batch_size):
             batch = texts[i : i + batch_size]
             kwargs = {"model": model, "content": list(batch), **self._params}
             try:
-                resp = self._genai.embed_content(**kwargs)
-                embeddings.extend(self._extract_embeddings(resp))
-            except Exception:
+                attempt = 0
+                while True:
+                    try:
+                        resp = self._genai.embed_content(**kwargs)
+                        embeddings.extend(self._extract_embeddings(resp))
+                        break
+                    except Exception as exc:
+                        if self._is_quota_error(exc) and attempt < self._max_retries:
+                            sleep_seconds = self._retry_sleep(exc, attempt)
+                            print(
+                                f"Gemini quota hit; retrying in {sleep_seconds:.1f}s.",
+                                file=sys.stderr,
+                            )
+                            time.sleep(sleep_seconds)
+                            attempt += 1
+                            continue
+                        raise
+            except Exception as exc:
                 print(
                     "Gemini batch embedding failed; falling back to single requests.",
                     file=sys.stderr,
                 )
+                print(f"Batch error: {exc}", file=sys.stderr)
                 for text in batch:
-                    resp = self._genai.embed_content(
-                        model=model, content=text, **self._params
-                    )
-                    embeddings.extend(self._extract_embeddings(resp))
+                    attempt = 0
+                    while True:
+                        try:
+                            resp = self._genai.embed_content(
+                                model=model, content=text, **self._params
+                            )
+                            embeddings.extend(self._extract_embeddings(resp))
+                            break
+                        except Exception as inner_exc:
+                            if (
+                                self._is_quota_error(inner_exc)
+                                and attempt < self._max_retries
+                            ):
+                                sleep_seconds = self._retry_sleep(inner_exc, attempt)
+                                print(
+                                    f"Gemini quota hit; retrying in {sleep_seconds:.1f}s.",
+                                    file=sys.stderr,
+                                )
+                                time.sleep(sleep_seconds)
+                                attempt += 1
+                                continue
+                            raise
         return np.array(embeddings, dtype=np.float32)
 
 
@@ -118,7 +193,9 @@ def _resolve_api_key(params: Dict[str, Any], env_keys: Sequence[str]) -> Optiona
     return None
 
 
-def build_embedding_provider(provider: str, params: Dict[str, Any]) -> EmbeddingProvider:
+def build_embedding_provider(
+    provider: str, params: Dict[str, Any]
+) -> EmbeddingProvider:
     """Factory for embedding providers based on the provider id."""
     provider_id = provider.lower()
     if provider_id == "openai":

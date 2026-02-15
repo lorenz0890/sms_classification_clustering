@@ -1,4 +1,5 @@
 """Embedding computation workflow for SMS data."""
+
 from __future__ import annotations
 
 import json
@@ -65,7 +66,9 @@ class EmbeddingComputer:
                             messages = (
                                 metadata.get("num_messages")
                                 if isinstance(metadata, dict)
-                                else len(data["texts"]) if "texts" in data else "unknown"
+                                else (
+                                    len(data["texts"]) if "texts" in data else "unknown"
+                                )
                             )
                             print(f"messages={messages}")
                             print(f"cached {output_path}")

@@ -1,4 +1,5 @@
 """Entry point for running classic_ml or genai_llm pipelines from JSON config."""
+
 from __future__ import annotations
 
 import argparse
