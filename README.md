@@ -4,7 +4,7 @@
 
 ```bash
 git clone https://github.com/lorenz0890/sms_classification_clustering
-cd PythonProject
+cd sms_classification_clustering
 ```
 
 - Create and activate a virtual environment:
