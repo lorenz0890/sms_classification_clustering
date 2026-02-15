@@ -64,15 +64,16 @@ class ClassicMLFacade:
 
     def run(self) -> int:
         """Run the configured pipeline in order."""
+        step_handlers = {
+            "words": self._run_words,
+            "ngrams": self._run_ngrams,
+            "classifier": self._run_classifier,
+        }
         for step in self._config.pipeline:
-            if step == "words":
-                exit_code = self._run_words()
-            elif step == "ngrams":
-                exit_code = self._run_ngrams()
-            elif step == "classifier":
-                exit_code = self._run_classifier()
-            else:
+            handler = step_handlers.get(step)
+            if handler is None:
                 raise ValueError(f"Unsupported pipeline step: {step}")
+            exit_code = handler()
             if exit_code != 0:
                 return exit_code
         return 0

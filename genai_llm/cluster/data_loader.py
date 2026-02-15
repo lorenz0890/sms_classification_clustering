@@ -34,19 +34,19 @@ def load_cluster_dataset(
     if not path.exists():
         raise FileNotFoundError(f"File not found: {path}")
 
-    data = np.load(path, allow_pickle=True)
-    reduced = data["reduced"]
-    coords_2d = data["coords_2d"] if "coords_2d" in data else None
-    cluster_ids = data["cluster_ids"]
-    labels = data["labels"].tolist() if "labels" in data else []
-    texts = data["texts"].tolist() if "texts" in data else []
+    with np.load(path, allow_pickle=True) as data:
+        reduced = data["reduced"]
+        coords_2d = data["coords_2d"] if "coords_2d" in data else None
+        cluster_ids = data["cluster_ids"]
+        labels = data["labels"].tolist() if "labels" in data else []
+        texts = data["texts"].tolist() if "texts" in data else []
 
-    metadata: Optional[Dict[str, Any]] = None
-    if "metadata" in data:
-        try:
-            metadata = json.loads(str(data["metadata"].item()))
-        except (ValueError, TypeError):
-            metadata = None
+        metadata: Optional[Dict[str, Any]] = None
+        if "metadata" in data:
+            try:
+                metadata = json.loads(str(data["metadata"].item()))
+            except (ValueError, TypeError):
+                metadata = None
 
     coords = coords_2d
     if coords_source == "reduce" or coords is None:

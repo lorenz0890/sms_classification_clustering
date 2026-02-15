@@ -110,17 +110,17 @@ class GenaiLLMFacade:
 
     def run(self) -> int:
         """Run the configured pipeline in order."""
+        step_handlers = {
+            "embeddings": self._run_embeddings,
+            "cluster": self._run_cluster,
+            "visualize": self._run_visualize,
+            "analyze": self._run_analyze,
+        }
         for step in self._config.pipeline:
-            if step == "embeddings":
-                exit_code = self._run_embeddings()
-            elif step == "cluster":
-                exit_code = self._run_cluster()
-            elif step == "visualize":
-                exit_code = self._run_visualize()
-            elif step == "analyze":
-                exit_code = self._run_analyze()
-            else:
+            handler = step_handlers.get(step)
+            if handler is None:
                 raise ValueError(f"Unsupported pipeline step: {step}")
+            exit_code = handler()
             if exit_code != 0:
                 return exit_code
         return 0

@@ -3,7 +3,7 @@
 - Clone and enter the repo:
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/lorenz0890/sms_classification_clustering
 cd PythonProject
 ```
 
@@ -108,9 +108,12 @@ Swap `_openai` for `_gemini` in the filenames to run Gemini-backed configs.
   - `classic_ml/ClassicMLFacade` and `genai_llm/GenaiLLMFacade` provide a single `run()` entrypoint.
   - The facades implement a consistent pipeline contract, so `main.py` only needs to load config and delegate execution.
   - This makes orchestration predictable and keeps step-level logic encapsulated.
+- Pipeline handler maps:
+  - Both facades dispatch pipeline steps via `{step: handler}` maps instead of chained conditionals, making step extension safer.
 - Strategy pattern for classifiers:
   - `classic_ml/classifiers` holds the Naive Bayes, SVM, and Logistic Regression implementations.
   - `classifier.classifiers` controls which strategies are trained and compared.
+  - Classifier IDs and aliases are centralized in `classic_ml/classifiers/registry.py` to keep config validation and factories in sync.
 - Strategy pattern for clustering:
   - `ClusteringStrategy` defines the interface for clustering algorithms, with `HDBSCANStrategy`, `DBSCANStrategy`, and `KMeansStrategy` implementations.
   - The factory selects a strategy based on config, so adding a new algorithm only requires a new strategy class.
@@ -118,6 +121,9 @@ Swap `_openai` for `_gemini` in the filenames to run Gemini-backed configs.
 - Strategy pattern for reduction:
   - `ReductionStrategy` defines the interface for reducers, with `PCAReductionStrategy`, `KernelPCAReductionStrategy`, and `SVDReductionStrategy` implementations.
   - The factory selects a strategy based on config, so swapping reducers only changes JSON settings.
+- Shared formatting helpers:
+  - `genai_llm/cluster/formatting.py` centralizes reduction/provider naming and output filename construction for cluster plots.
+  - This keeps visualize/analyze output naming consistent and avoids duplication.
 - Configuration and validation:
   - Typed dataclass configs validate inputs early, preventing silent misconfiguration.
   - Algorithm parameters are passed as a `cluster.params` JSON object, which keeps algorithm-specific knobs isolated.
@@ -127,9 +133,10 @@ Swap `_openai` for `_gemini` in the filenames to run Gemini-backed configs.
   - Clustering always recomputes to reflect changed algorithm parameters or reduction settings while still using cached embeddings.
   - Cache and output roots are configurable, with defaults aimed at keeping artifacts organized and reproducible.
 - Extensibility and reuse:
-  - Embedding providers are isolated behind `OpenAIEmbeddingProvider` for easier replacement.
+  - Embedding providers are isolated behind `EmbeddingProvider` for easier replacement.
   - Dimensionality reduction, metrics, and plotting are in focused modules to reduce coupling.
-- Shared NLP utilities (tokenization, stopwords) live in `utils` to avoid duplication across packages.
+  - Shared NLP utilities (tokenization, stopwords) live in `utils` to avoid duplication across packages.
+  - `np.load` calls use context managers to close files promptly, avoiding file-handle leaks.
 
 **Robust Evaluation**
 - Classic ML (spam/ham): use nested cross-validation over a fixed grid of hyperparameters and N fixed random seeds to get stable estimates of predictive quality.

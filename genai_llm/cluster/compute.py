@@ -59,51 +59,54 @@ class ClusterComputer:
             print(f"Failed to read embeddings file: {embeddings_path}", file=sys.stderr)
             return 1
 
-        if "embeddings" not in data:
-            print(f"Missing embeddings in {embeddings_path}", file=sys.stderr)
-            return 1
+        with data:
+            if "embeddings" not in data:
+                print(f"Missing embeddings in {embeddings_path}", file=sys.stderr)
+                return 1
 
-        embeddings = data["embeddings"]
-        labels = data["labels"].tolist() if "labels" in data else []
-        texts = data["texts"].tolist() if "texts" in data else []
-        if not labels or not texts:
-            print(f"Missing labels/texts in {embeddings_path}", file=sys.stderr)
-            return 1
+            embeddings = data["embeddings"]
+            labels = data["labels"].tolist() if "labels" in data else []
+            texts = data["texts"].tolist() if "texts" in data else []
+            if not labels or not texts:
+                print(f"Missing labels/texts in {embeddings_path}", file=sys.stderr)
+                return 1
 
-        reduced = reduce_embeddings(
-            embeddings,
-            self._config.reduce.algorithm,
-            self._config.reduce.dims,
-            params=self._config.reduce.params,
-            random_state=self._config.seed,
-        )
-        strategy = build_clustering_strategy(self._config.algorithm, self._config.params)
-        cluster_ids = strategy.fit_predict(reduced)
-
-        coords_2d = (
-            reduced
-            if reduced.shape[1] == 2
-            else reduce_embeddings(
-                reduced,
+            reduced = reduce_embeddings(
+                embeddings,
                 self._config.reduce.algorithm,
-                2,
+                self._config.reduce.dims,
                 params=self._config.reduce.params,
                 random_state=self._config.seed,
             )
-        )
+            strategy = build_clustering_strategy(
+                self._config.algorithm, self._config.params
+            )
+            cluster_ids = strategy.fit_predict(reduced)
 
-        metadata = {
-            "cluster_algorithm": strategy.name,
-            "cluster_algorithm_id": self._config.algorithm,
-            "cluster_params": self._config.params,
-            "seed": self._config.seed,
-            "reduce_algorithm": self._config.reduce.algorithm,
-            "reduce_params": self._config.reduce.params,
-            "reduce_dims": self._config.reduce.dims,
-            "embeddings_path": str(embeddings_path),
-            "embedding_metadata": self._load_embedding_metadata(data),
-            "num_messages": len(texts),
-        }
+            coords_2d = (
+                reduced
+                if reduced.shape[1] == 2
+                else reduce_embeddings(
+                    reduced,
+                    self._config.reduce.algorithm,
+                    2,
+                    params=self._config.reduce.params,
+                    random_state=self._config.seed,
+                )
+            )
+
+            metadata = {
+                "cluster_algorithm": strategy.name,
+                "cluster_algorithm_id": self._config.algorithm,
+                "cluster_params": self._config.params,
+                "seed": self._config.seed,
+                "reduce_algorithm": self._config.reduce.algorithm,
+                "reduce_params": self._config.reduce.params,
+                "reduce_dims": self._config.reduce.dims,
+                "embeddings_path": str(embeddings_path),
+                "embedding_metadata": self._load_embedding_metadata(data),
+                "num_messages": len(texts),
+            }
 
         output_npz_path = pathlib.Path(self._config.output_npz)
         output_tsv_path = pathlib.Path(self._config.output_tsv)

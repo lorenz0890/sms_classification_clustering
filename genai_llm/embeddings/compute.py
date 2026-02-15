@@ -38,45 +38,47 @@ class EmbeddingComputer:
         output_path = pathlib.Path(self._config.output_npz)
         if output_path.exists():
             try:
-                data = np.load(output_path, allow_pickle=True)
-                metadata = None
-                if "metadata" in data:
-                    try:
-                        metadata = json.loads(str(data["metadata"].item()))
-                    except (ValueError, TypeError):
-                        metadata = None
-                if isinstance(metadata, dict):
-                    cached_provider = metadata.get("provider") or "openai"
-                    cached_model = metadata.get("model")
-                    cached_params = metadata.get("provider_params", {})
-                    cached_limit = metadata.get("limit")
-                    if (
-                        cached_provider != self._config.provider
-                        or cached_model != self._config.model
-                        or cached_params != self._config.params
-                        or cached_limit != self._config.limit
-                    ):
-                        print(
-                            "Cached embeddings do not match provider/model/params; "
-                            "recomputing.",
-                            file=sys.stderr,
-                        )
+                with np.load(output_path, allow_pickle=True) as data:
+                    metadata = None
+                    if "metadata" in data:
+                        try:
+                            metadata = json.loads(str(data["metadata"].item()))
+                        except (ValueError, TypeError):
+                            metadata = None
+                    if isinstance(metadata, dict):
+                        cached_provider = metadata.get("provider") or "openai"
+                        cached_model = metadata.get("model")
+                        cached_params = metadata.get("provider_params", {})
+                        cached_limit = metadata.get("limit")
+                        if (
+                            cached_provider != self._config.provider
+                            or cached_model != self._config.model
+                            or cached_params != self._config.params
+                            or cached_limit != self._config.limit
+                        ):
+                            print(
+                                "Cached embeddings do not match provider/model/params; "
+                                "recomputing.",
+                                file=sys.stderr,
+                            )
+                        else:
+                            messages = (
+                                metadata.get("num_messages")
+                                if isinstance(metadata, dict)
+                                else len(data["texts"]) if "texts" in data else "unknown"
+                            )
+                            print(f"messages={messages}")
+                            print(f"cached {output_path}")
+                            return 0
                     else:
-                        messages = (
-                            metadata.get("num_messages")
-                            if isinstance(metadata, dict)
-                            else len(data["texts"]) if "texts" in data else "unknown"
-                        )
+                        messages = len(data["texts"]) if "texts" in data else "unknown"
                         print(f"messages={messages}")
                         print(f"cached {output_path}")
                         return 0
-                else:
-                    messages = len(data["texts"]) if "texts" in data else "unknown"
-                    print(f"messages={messages}")
-                    print(f"cached {output_path}")
-                    return 0
             except (OSError, ValueError):
-                print(f"Failed to read cached embeddings: {output_path}", file=sys.stderr)
+                print(
+                    f"Failed to read cached embeddings: {output_path}", file=sys.stderr
+                )
                 return 1
 
         provider = self._provider or self._build_provider()

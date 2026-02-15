@@ -11,22 +11,11 @@ from utils import (
     require_ratio,
     require_str,
 )
+from .classifiers.registry import list_supported_classifiers, normalize_classifier_id
 
 
 _ALLOWED_PIPELINE = ("words", "ngrams", "classifier")
 _DEFAULT_PIPELINE = ("words", "ngrams", "classifier")
-_ALLOWED_CLASSIFIERS = ("naive_bayes", "svm", "logistic_regression")
-_CLASSIFIER_ALIASES = {
-    "naivebayes": "naive_bayes",
-    "naive-bayes": "naive_bayes",
-    "nb": "naive_bayes",
-    "logistic": "logistic_regression",
-    "logreg": "logistic_regression",
-    "logisticregression": "logistic_regression",
-    "logistic-regression": "logistic_regression",
-    "linear_svm": "svm",
-    "linear-svm": "svm",
-}
 _DEFAULT_CLASSIFIERS = ("naive_bayes",)
 
 
@@ -119,10 +108,7 @@ class ClassifierConfig:
         for classifier_id in classifiers:
             if not isinstance(classifier_id, str):
                 raise ValueError("classifier.classifiers must be a list of strings.")
-            token = classifier_id.strip().lower()
-            token = token.replace(" ", "_")
-            token = _CLASSIFIER_ALIASES.get(token, token)
-            normalized.append(token)
+            normalized.append(normalize_classifier_id(classifier_id))
         return cls(
             path=data.get("path", cls.path),
             test_ratio=data.get("test_ratio", cls.test_ratio),
@@ -149,16 +135,15 @@ class ClassifierConfig:
         )
         if not isinstance(self.classifiers, (list, tuple)) or not self.classifiers:
             raise ValueError("classifier.classifiers must be a non-empty list.")
+        allowed = list_supported_classifiers()
         normalized = []
         for classifier_id in self.classifiers:
             if not isinstance(classifier_id, str):
                 raise ValueError("classifier.classifiers must be a list of strings.")
-            token = classifier_id.strip().lower()
-            token = token.replace(" ", "_")
-            token = _CLASSIFIER_ALIASES.get(token, token)
-            if token not in _ALLOWED_CLASSIFIERS:
+            token = normalize_classifier_id(classifier_id)
+            if token not in allowed:
                 raise ValueError(
-                    f"classifier.classifiers must be one of {_ALLOWED_CLASSIFIERS}."
+                    f"classifier.classifiers must be one of {allowed}."
                 )
             normalized.append(token)
         self.classifiers = tuple(normalized)
