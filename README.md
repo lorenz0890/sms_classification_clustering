@@ -152,6 +152,7 @@ Swap `_openai` for `_gemini` in the filenames to run Gemini-backed configs.
   - `np.load` calls use context managers to close files promptly, avoiding file-handle leaks.
 
 **Robust Evaluation**
+- Note: the steps below are a theoretical robust evaluation pipeline and are not implemented in the current codebase.
 - Classic ML (spam/ham): use nested cross-validation over a fixed grid of hyperparameters and N fixed random seeds to get stable estimates of predictive quality.
 - GenAI clustering: rerun clustering across different seeds (bootstrap) to assess stability under different initial states and estimate confidence intervals for cluster assignments.
 - If using clustering as a classifier, apply a similar evaluation pipeline to classic ML (nested CV + fixed seeds) for robust results.
