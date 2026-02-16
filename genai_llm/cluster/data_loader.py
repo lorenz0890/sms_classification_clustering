@@ -24,32 +24,33 @@ class ClusterDataset:
     metadata: Optional[Dict[str, Any]]
 
 
-def load_cluster_dataset(
-    input_path: str,
+def _parse_metadata(data: np.lib.npyio.NpzFile) -> Optional[Dict[str, Any]]:
+    """Parse JSON metadata stored in an NPZ file."""
+    if "metadata" not in data:
+        return None
+    try:
+        metadata_value = np.asarray(data["metadata"]).item()
+        return json.loads(str(metadata_value))
+    except (ValueError, TypeError):
+        return None
+
+
+def _load_list(data: np.lib.npyio.NpzFile, key: str) -> List[str]:
+    """Load a list-like array from an NPZ file."""
+    if key not in data:
+        return []
+    return np.asarray(data[key]).tolist()
+
+
+def _resolve_coords(
     coords_source: str,
+    coords_2d: Optional[np.ndarray],
+    reduced: np.ndarray,
     reduce_algorithm: str,
     reduce_params: Dict[str, Any],
-) -> ClusterDataset:
-    """Load cluster data from disk and compute coordinates as needed."""
-    path = pathlib.Path(input_path)
-    if not path.exists():
-        raise FileNotFoundError(f"File not found: {path}")
-
-    with np.load(path, allow_pickle=True) as data:
-        reduced: np.ndarray = np.asarray(data["reduced"])
-        coords_2d = np.asarray(data["coords_2d"]) if "coords_2d" in data else None
-        cluster_ids: np.ndarray = np.asarray(data["cluster_ids"])
-        labels = np.asarray(data["labels"]).tolist() if "labels" in data else []
-        texts = np.asarray(data["texts"]).tolist() if "texts" in data else []
-
-        metadata: Optional[Dict[str, Any]] = None
-        if "metadata" in data:
-            try:
-                metadata_value = np.asarray(data["metadata"]).item()
-                metadata = json.loads(str(metadata_value))
-            except (ValueError, TypeError):
-                metadata = None
-
+    metadata: Optional[Dict[str, Any]],
+) -> np.ndarray:
+    """Resolve the 2D coordinates to use for visualization."""
     coords = coords_2d
     if coords_source == "reduce" or coords is None:
         seed_value = metadata.get("seed") if isinstance(metadata, dict) else None
@@ -65,6 +66,36 @@ def load_cluster_dataset(
                 random_state=random_state,
             )
         )
+    return coords
+
+
+def load_cluster_dataset(
+    input_path: str,
+    coords_source: str,
+    reduce_algorithm: str,
+    reduce_params: Dict[str, Any],
+) -> ClusterDataset:
+    """Load cluster data from disk and compute coordinates as needed."""
+    path = pathlib.Path(input_path)
+    if not path.exists():
+        raise FileNotFoundError(f"File not found: {path}")
+
+    with np.load(path, allow_pickle=True) as data:
+        reduced: np.ndarray = np.asarray(data["reduced"])
+        coords_2d = np.asarray(data["coords_2d"]) if "coords_2d" in data else None
+        cluster_ids: np.ndarray = np.asarray(data["cluster_ids"])
+        labels = _load_list(data, "labels")
+        texts = _load_list(data, "texts")
+        metadata = _parse_metadata(data)
+
+    coords = _resolve_coords(
+        coords_source,
+        coords_2d,
+        reduced,
+        reduce_algorithm,
+        reduce_params,
+        metadata,
+    )
 
     return ClusterDataset(
         reduced=reduced,

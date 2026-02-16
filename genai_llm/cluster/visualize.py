@@ -4,20 +4,19 @@ from __future__ import annotations
 
 import pathlib
 import sys
-from typing import Optional
 
 from ..config import VisualizeConfig
-from .data_loader import ClusterDataset, load_cluster_dataset
-from .formatting import (
-    build_output_path,
-    format_embedding_label,
-    format_reduction_name,
-    resolve_provider_id,
-    resolve_reduction_id,
-)
+from .formatting import build_output_path
 from .metrics import compute_cluster_metrics
-from .plotting import ClusterPlotData, ClusterPlotter
 from .reporting import write_cluster_report
+from .rendering import (
+    apply_plot_labels,
+    build_plot_context,
+    build_plotter,
+    import_matplotlib,
+    load_dataset_or_warn,
+    print_plot_summary,
+)
 
 
 class ClusterVisualizer:
@@ -27,63 +26,33 @@ class ClusterVisualizer:
         """Initialize the visualizer with configuration."""
         self._config = config
 
-    def _load_dataset(self) -> Optional[ClusterDataset]:
-        """Load the clustering dataset from disk."""
-        try:
-            return load_cluster_dataset(
-                self._config.input,
-                self._config.coords_source,
-                self._config.reduce.algorithm,
-                self._config.reduce.params,
-            )
-        except FileNotFoundError as exc:
-            print(str(exc), file=sys.stderr)
-            return None
-
     def run(self) -> int:
         """Render the cluster visualization and save it to disk."""
         self._config.validate()
-        dataset = self._load_dataset()
+        dataset = load_dataset_or_warn(
+            self._config.input,
+            self._config.coords_source,
+            self._config.reduce.algorithm,
+            self._config.reduce.params,
+        )
         if dataset is None:
             return 1
         if not dataset.labels:
             print(f"Missing labels in {self._config.input}", file=sys.stderr)
             return 1
-
-        try:
-            import matplotlib.pyplot as plt
-        except ImportError:
-            print(
-                "Missing matplotlib. Install it in your venv to generate plots.",
-                file=sys.stderr,
-            )
+        plt = import_matplotlib()
+        if plt is None:
             return 1
 
         plt.figure(figsize=(9.72, 7.776))
-        plot_data = ClusterPlotData(
-            coords=dataset.coords,
-            cluster_ids=dataset.cluster_ids,
-            labels=dataset.labels,
-        )
-        plotter = ClusterPlotter(plt, plot_data)
+        plotter, plot_data = build_plotter(plt, dataset)
         plotter.draw_scatter()
-
-        algorithm = "HDBSCAN"
-        algorithm_id: Optional[str] = None
-        if isinstance(dataset.metadata, dict):
-            algorithm = dataset.metadata.get("cluster_algorithm") or algorithm
-            algorithm_id = dataset.metadata.get(
-                "cluster_algorithm_id"
-            ) or dataset.metadata.get("cluster_algorithm")
-        reduction_id = resolve_reduction_id(
-            self._config.coords_source, self._config.reduce.algorithm, dataset.metadata
+        context = build_plot_context(
+            self._config.coords_source,
+            self._config.reduce.algorithm,
+            dataset.metadata,
         )
-        provider_id = resolve_provider_id(dataset.metadata)
-        reduction_name = format_reduction_name(reduction_id)
-        embedding_label = format_embedding_label(dataset.metadata)
-        plt.title(f"SMS Clusters ({algorithm} + {reduction_name} on {embedding_label})")
-        plt.xlabel("Component 1")
-        plt.ylabel("Component 2")
+        apply_plot_labels(plt, context)
 
         metrics = compute_cluster_metrics(
             dataset.coords, dataset.cluster_ids, dataset.labels
@@ -91,7 +60,10 @@ class ClusterVisualizer:
         plotter.add_metrics_box(metrics.text())
         legends = plotter.add_legends()
         output_path = build_output_path(
-            self._config.output, algorithm_id, reduction_id, provider_id
+            self._config.output,
+            context.algorithm_id,
+            context.reduction_id,
+            context.provider_id,
         )
         plotter.save(output_path, legends)
         report_path = write_cluster_report(
@@ -104,20 +76,10 @@ class ClusterVisualizer:
                 "params": self._config.reduce.params,
                 "dims": self._config.reduce.dims,
             },
-            algorithm_id=algorithm_id,
-            reduction_id=reduction_id,
-            provider_id=provider_id,
+            algorithm_id=context.algorithm_id,
+            reduction_id=context.reduction_id,
+            provider_id=context.provider_id,
         )
 
-        messages = (
-            dataset.metadata.get("num_messages")
-            if isinstance(dataset.metadata, dict)
-            else len(dataset.labels)
-        )
-        num_noise = int((dataset.cluster_ids == -1).sum())
-        print(
-            f"messages={messages} clusters={len(plot_data.unique_clusters())} noise={num_noise}"
-        )
-        print(f"wrote {output_path}")
-        print(f"wrote {report_path}")
+        print_plot_summary(dataset, plot_data, output_path, report_path)
         return 0

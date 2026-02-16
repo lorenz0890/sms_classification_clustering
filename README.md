@@ -35,6 +35,27 @@ black .
 flake8 .
 ```
 
+- Generate UML/component diagrams (optional, requires Graphviz `dot` and `pydeps`):
+
+```bash
+python utils/generate_diagrams.py
+```
+
+Outputs land in `docs/diagrams` (UML class/package PNGs from `pyreverse` plus dependency SVGs from `pydeps`).
+If `pydeps` is missing, reinstall requirements; if `dot` is missing, install Graphviz.
+
+- Generate code metrics reports (optional):
+
+```bash
+python utils/generate_metrics.py
+```
+
+Outputs land in `docs/metrics` (radon complexity/MI/LOC plus a pylint design report).
+Radon runs static analysis on the AST (no code execution) and emits:
+- Cyclomatic complexity per function/class (`radon_cc.txt`).
+- Maintainability index per file (`radon_mi.txt`).
+- Raw LOC statistics (`radon_raw.txt`).
+
 - Dataset: place the SMS Spam Collection file at `data/SMSSpamCollection` (tab-separated `label<TAB>text`).
 
 - Set required environment variables for GenAI runs:

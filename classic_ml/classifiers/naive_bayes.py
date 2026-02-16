@@ -25,7 +25,9 @@ class NaiveBayesStrategy(ClassifierStrategy):
     def predict(self, model: object, features: object) -> Sequence[str]:
         """Predict labels for the feature set."""
         classifier = model
-        return [classifier.classify(feature) for feature in features]  # type: ignore[arg-type]
+        return [
+            classifier.classify(feature) for feature in features
+        ]  # type: ignore[arg-type]
 
     def show_informative(
         self, model: object, top_n: int, feature_names: Sequence[str] | None = None

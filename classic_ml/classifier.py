@@ -6,7 +6,7 @@ import json
 import pathlib
 import random
 import sys
-from typing import List
+from typing import List, Optional
 
 from sklearn.feature_extraction import DictVectorizer
 
@@ -40,21 +40,25 @@ class SmsClassifierRunner:
         output_path.write_text(json.dumps(payload, indent=2) + "\n")
         print(f"wrote {output_path}")
 
-    def run(self) -> int:
-        """Run training/evaluation and print metrics for each classifier."""
-        self._config.validate()
-        ensure_nltk_data(include_stopwords=self._config.remove_stopwords)
+    def _load_split_data(
+        self,
+    ) -> Optional[tuple[list[tuple[str, str]], list[tuple[str, str]]]]:
+        """Load and split the labeled dataset into train/test subsets."""
         path = pathlib.Path(self._config.path)
         if not path.exists():
             print(f"File not found: {path}", file=sys.stderr)
-            return 1
-
+            return None
         data = list(iter_labeled_messages(path))
         random.Random(self._config.seed).shuffle(data)
         split = int(len(data) * (1.0 - self._config.test_ratio))
-        train_data = data[:split]
-        test_data = data[split:]
+        return data[:split], data[split:]
 
+    def _prepare_features(
+        self,
+        train_data: list[tuple[str, str]],
+        test_data: list[tuple[str, str]],
+    ) -> tuple[list[dict[str, bool]], list[dict[str, bool]], list[str], list[str]]:
+        """Build feature dictionaries and labels for train/test data."""
         stopwords_set = load_stopwords() if self._config.remove_stopwords else None
         feature_builder = FeatureBuilder(self._config.top_words, stopwords_set)
         vocab = feature_builder.build_vocab(train_data)
@@ -64,10 +68,34 @@ class SmsClassifierRunner:
         test_features = [feature_fn(text) for label, text in test_data]
         train_labels = [label for label, _ in train_data]
         test_labels = [label for label, _ in test_data]
+        return train_features, test_features, train_labels, test_labels
 
+    def _vectorize_features(
+        self,
+        train_features: list[dict[str, bool]],
+        test_features: list[dict[str, bool]],
+    ) -> tuple[DictVectorizer, object, object]:
+        """Vectorize dict features into sparse matrices."""
         vectorizer = DictVectorizer(sparse=True)
         train_matrix = vectorizer.fit_transform(train_features)
         test_matrix = vectorizer.transform(test_features)
+        return vectorizer, train_matrix, test_matrix
+
+    def run(self) -> int:
+        """Run training/evaluation and print metrics for each classifier."""
+        self._config.validate()
+        ensure_nltk_data(include_stopwords=self._config.remove_stopwords)
+        split_data = self._load_split_data()
+        if split_data is None:
+            return 1
+        train_data, test_data = split_data
+
+        train_features, test_features, train_labels, test_labels = (
+            self._prepare_features(train_data, test_data)
+        )
+        vectorizer, train_matrix, test_matrix = self._vectorize_features(
+            train_features, test_features
+        )
 
         results: List[ClassifierResult] = []
         for classifier_id in self._config.classifiers:

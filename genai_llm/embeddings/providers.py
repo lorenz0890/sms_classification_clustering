@@ -170,10 +170,11 @@ class GeminiEmbeddingProvider(EmbeddingProvider):
                                 and attempt < self._max_retries
                             ):
                                 sleep_seconds = self._retry_sleep(inner_exc, attempt)
-                                print(
-                                    f"Gemini quota hit; retrying in {sleep_seconds:.1f}s.",
-                                    file=sys.stderr,
+                                message = (
+                                    "Gemini quota hit; retrying in "
+                                    f"{sleep_seconds:.1f}s."
                                 )
+                                print(message, file=sys.stderr)
                                 time.sleep(sleep_seconds)
                                 attempt += 1
                                 continue

@@ -2,15 +2,14 @@
 
 from __future__ import annotations
 
-import collections
-import pathlib
 import sys
-from typing import Dict, Optional
+from typing import Iterable, Optional
 
-from utils import ensure_nltk_data, iter_labeled_messages, load_stopwords, tokenize
+from utils import tokenize
 
 from .config import WordsConfig
 from .plotting import plot_label_bars
+from .text_stats import count_items_by_label, load_dataset
 
 
 class WordFrequencyAnalyzer:
@@ -20,32 +19,24 @@ class WordFrequencyAnalyzer:
         """Initialize the analyzer with configuration."""
         self._config = config
 
-    def _count_words(
-        self, path: pathlib.Path, stopwords_set: Optional[set[str]]
-    ) -> Dict[str, collections.Counter[str]]:
-        """Count word frequencies per label."""
-        counters: Dict[str, collections.Counter[str]] = {
-            "ham": collections.Counter(),
-            "spam": collections.Counter(),
-        }
-        for label, msg in iter_labeled_messages(path):
-            if label not in counters:
-                continue
-            for word in tokenize(msg, stopwords_set=stopwords_set):
-                counters[label][word] += 1
-        return counters
+    def _word_items(
+        self, text: str, stopwords_set: Optional[set[str]]
+    ) -> Iterable[str]:
+        """Yield tokenized words for a message."""
+        return tokenize(text, stopwords_set=stopwords_set)
 
     def run(self) -> int:
         """Run the word frequency analysis and print results."""
         self._config.validate()
-        path = pathlib.Path(self._config.path)
-        if not path.exists():
-            print(f"File not found: {path}", file=sys.stderr)
+        try:
+            path, stopwords_set = load_dataset(
+                self._config.path, self._config.remove_stopwords
+            )
+        except FileNotFoundError as exc:
+            print(str(exc), file=sys.stderr)
             return 1
 
-        ensure_nltk_data(include_stopwords=self._config.remove_stopwords)
-        stopwords_set = load_stopwords() if self._config.remove_stopwords else None
-        counters = self._count_words(path, stopwords_set=stopwords_set)
+        counters = count_items_by_label(path, stopwords_set, self._word_items)
         label_items = {}
         for label in ("ham", "spam"):
             items = counters[label].most_common(self._config.top)

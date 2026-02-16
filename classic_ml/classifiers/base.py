@@ -80,6 +80,22 @@ def compute_metrics(
     positive_label: str = "spam",
 ) -> Tuple[float, float, float, float, int, int]:
     """Compute accuracy, precision, recall, f1, correct, total."""
+    correct, total, tp, fp, fn = _count_confusion(y_true, y_pred, positive_label)
+    accuracy = correct / total if total else 0.0
+    precision = tp / (tp + fp) if (tp + fp) else 0.0
+    recall = tp / (tp + fn) if (tp + fn) else 0.0
+    f1 = (
+        (2 * precision * recall / (precision + recall)) if (precision + recall) else 0.0
+    )
+    return accuracy, precision, recall, f1, correct, total
+
+
+def _count_confusion(
+    y_true: Sequence[str],
+    y_pred: Sequence[str],
+    positive_label: str,
+) -> Tuple[int, int, int, int, int]:
+    """Count correct/total and TP/FP/FN for a binary positive label."""
     correct = 0
     total = 0
     tp = 0
@@ -95,13 +111,7 @@ def compute_metrics(
             fp += 1
         elif pred_label != positive_label and true_label == positive_label:
             fn += 1
-    accuracy = correct / total if total else 0.0
-    precision = tp / (tp + fp) if (tp + fp) else 0.0
-    recall = tp / (tp + fn) if (tp + fn) else 0.0
-    f1 = (
-        (2 * precision * recall / (precision + recall)) if (precision + recall) else 0.0
-    )
-    return accuracy, precision, recall, f1, correct, total
+    return correct, total, tp, fp, fn
 
 
 class ClassifierStrategy(ABC):

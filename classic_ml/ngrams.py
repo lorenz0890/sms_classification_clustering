@@ -2,17 +2,16 @@
 
 from __future__ import annotations
 
-import collections
-import pathlib
 import sys
-from typing import Dict, Iterable, Optional, Tuple
+from typing import Iterable, Optional, Tuple
 
 import nltk
 
-from utils import ensure_nltk_data, iter_labeled_messages, load_stopwords, tokenize
+from utils import tokenize
 
 from .config import NgramsConfig
 from .plotting import plot_label_bars
+from .text_stats import count_items_by_label, load_dataset
 
 
 class NgramFrequencyAnalyzer:
@@ -22,21 +21,12 @@ class NgramFrequencyAnalyzer:
         """Initialize the analyzer with configuration."""
         self._config = config
 
-    def _count_ngrams(
-        self, path: pathlib.Path, stopwords_set: Optional[set[str]]
-    ) -> Dict[str, collections.Counter[Tuple[str, ...]]]:
-        """Count n-gram frequencies per label."""
-        counters: Dict[str, collections.Counter[Tuple[str, ...]]] = {
-            "ham": collections.Counter(),
-            "spam": collections.Counter(),
-        }
-        for label, msg in iter_labeled_messages(path):
-            if label not in counters:
-                continue
-            tokens = tokenize(msg, stopwords_set=stopwords_set)
-            for gram in nltk.ngrams(tokens, self._config.n):
-                counters[label][gram] += 1
-        return counters
+    def _ngram_items(
+        self, text: str, stopwords_set: Optional[set[str]]
+    ) -> Iterable[Tuple[str, ...]]:
+        """Yield n-gram tuples for a message."""
+        tokens = tokenize(text, stopwords_set=stopwords_set)
+        return nltk.ngrams(tokens, self._config.n)
 
     def _format_gram(self, gram: Iterable[str]) -> str:
         """Format an n-gram tuple for display."""
@@ -45,14 +35,15 @@ class NgramFrequencyAnalyzer:
     def run(self) -> int:
         """Run the n-gram analysis and print results."""
         self._config.validate()
-        path = pathlib.Path(self._config.path)
-        if not path.exists():
-            print(f"File not found: {path}", file=sys.stderr)
+        try:
+            path, stopwords_set = load_dataset(
+                self._config.path, self._config.remove_stopwords
+            )
+        except FileNotFoundError as exc:
+            print(str(exc), file=sys.stderr)
             return 1
 
-        ensure_nltk_data(include_stopwords=self._config.remove_stopwords)
-        stopwords_set = load_stopwords() if self._config.remove_stopwords else None
-        counters = self._count_ngrams(path, stopwords_set=stopwords_set)
+        counters = count_items_by_label(path, stopwords_set, self._ngram_items)
         label_items = {}
         for label in ("ham", "spam"):
             print(f"{label.upper()} {self._config.n}-GRAMS")

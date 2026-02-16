@@ -1,0 +1,516 @@
+main.py
+    LOC: 67
+    LLOC: 51
+    SLOC: 52
+    Comments: 0
+    Single comments: 3
+    Multi: 0
+    Blank: 12
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+classic_ml/classifier.py
+    LOC: 121
+    LLOC: 79
+    SLOC: 97
+    Comments: 0
+    Single comments: 5
+    Multi: 0
+    Blank: 19
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+classic_ml/config.py
+    LOC: 189
+    LLOC: 144
+    SLOC: 151
+    Comments: 0
+    Single comments: 13
+    Multi: 0
+    Blank: 25
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+classic_ml/facade.py
+    LOC: 82
+    LLOC: 60
+    SLOC: 59
+    Comments: 0
+    Single comments: 10
+    Multi: 0
+    Blank: 13
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+classic_ml/ngrams.py
+    LOC: 74
+    LLOC: 55
+    SLOC: 56
+    Comments: 0
+    Single comments: 6
+    Multi: 0
+    Blank: 12
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+classic_ml/plotting.py
+    LOC: 102
+    LLOC: 71
+    SLOC: 83
+    Comments: 0
+    Single comments: 3
+    Multi: 0
+    Blank: 16
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+classic_ml/words.py
+    LOC: 64
+    LLOC: 47
+    SLOC: 49
+    Comments: 0
+    Single comments: 5
+    Multi: 0
+    Blank: 10
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+classic_ml/__init__.py
+    LOC: 5
+    LLOC: 3
+    SLOC: 2
+    Comments: 0
+    Single comments: 1
+    Multi: 0
+    Blank: 2
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+classic_ml/classifiers/base.py
+    LOC: 142
+    LLOC: 105
+    SLOC: 99
+    Comments: 0
+    Single comments: 16
+    Multi: 0
+    Blank: 27
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+classic_ml/classifiers/logistic_regression.py
+    LOC: 27
+    LLOC: 18
+    SLOC: 14
+    Comments: 0
+    Single comments: 4
+    Multi: 0
+    Blank: 9
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+classic_ml/classifiers/naive_bayes.py
+    LOC: 39
+    LLOC: 25
+    SLOC: 24
+    Comments: 1
+    Single comments: 5
+    Multi: 0
+    Blank: 10
+    - Comment Stats
+        (C % L): 3%
+        (C % S): 4%
+        (C + M % L): 3%
+classic_ml/classifiers/registry.py
+    LOC: 34
+    LLOC: 15
+    SLOC: 21
+    Comments: 0
+    Single comments: 3
+    Multi: 0
+    Blank: 10
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+classic_ml/classifiers/svm.py
+    LOC: 27
+    LLOC: 18
+    SLOC: 14
+    Comments: 0
+    Single comments: 4
+    Multi: 0
+    Blank: 9
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+classic_ml/classifiers/__init__.py
+    LOC: 35
+    LLOC: 18
+    SLOC: 24
+    Comments: 0
+    Single comments: 2
+    Multi: 0
+    Blank: 9
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+genai_llm/config.py
+    LOC: 341
+    LLOC: 256
+    SLOC: 284
+    Comments: 0
+    Single comments: 20
+    Multi: 0
+    Blank: 37
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+genai_llm/facade.py
+    LOC: 129
+    LLOC: 84
+    SLOC: 101
+    Comments: 0
+    Single comments: 12
+    Multi: 0
+    Blank: 16
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+genai_llm/paths.py
+    LOC: 38
+    LLOC: 31
+    SLOC: 23
+    Comments: 0
+    Single comments: 6
+    Multi: 0
+    Blank: 9
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+genai_llm/__init__.py
+    LOC: 5
+    LLOC: 3
+    SLOC: 2
+    Comments: 0
+    Single comments: 1
+    Multi: 0
+    Blank: 2
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+genai_llm/algorithms/clustering.py
+    LOC: 92
+    LLOC: 66
+    SLOC: 51
+    Comments: 0
+    Single comments: 17
+    Multi: 0
+    Blank: 24
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+genai_llm/algorithms/reduction.py
+    LOC: 107
+    LLOC: 72
+    SLOC: 62
+    Comments: 0
+    Single comments: 18
+    Multi: 0
+    Blank: 27
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+genai_llm/algorithms/__init__.py
+    LOC: 6
+    LLOC: 4
+    SLOC: 3
+    Comments: 0
+    Single comments: 1
+    Multi: 0
+    Blank: 2
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+genai_llm/cluster/analyze.py
+    LOC: 232
+    LLOC: 129
+    SLOC: 197
+    Comments: 0
+    Single comments: 9
+    Multi: 0
+    Blank: 26
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+genai_llm/cluster/compute.py
+    LOC: 137
+    LLOC: 71
+    SLOC: 111
+    Comments: 0
+    Single comments: 6
+    Multi: 0
+    Blank: 20
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+genai_llm/cluster/data_loader.py
+    LOC: 76
+    LLOC: 50
+    SLOC: 60
+    Comments: 0
+    Single comments: 3
+    Multi: 0
+    Blank: 13
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+genai_llm/cluster/formatting.py
+    LOC: 118
+    LLOC: 83
+    SLOC: 94
+    Comments: 0
+    Single comments: 8
+    Multi: 0
+    Blank: 16
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+genai_llm/cluster/metrics.py
+    LOC: 140
+    LLOC: 99
+    SLOC: 118
+    Comments: 0
+    Single comments: 7
+    Multi: 0
+    Blank: 15
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+genai_llm/cluster/plotting.py
+    LOC: 118
+    LLOC: 58
+    SLOC: 92
+    Comments: 0
+    Single comments: 9
+    Multi: 0
+    Blank: 17
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+genai_llm/cluster/reporting.py
+    LOC: 78
+    LLOC: 31
+    SLOC: 65
+    Comments: 0
+    Single comments: 3
+    Multi: 0
+    Blank: 10
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+genai_llm/cluster/visualize.py
+    LOC: 122
+    LLOC: 68
+    SLOC: 104
+    Comments: 0
+    Single comments: 5
+    Multi: 0
+    Blank: 13
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+genai_llm/cluster/__init__.py
+    LOC: 7
+    LLOC: 5
+    SLOC: 4
+    Comments: 0
+    Single comments: 1
+    Multi: 0
+    Blank: 2
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+genai_llm/embeddings/compute.py
+    LOC: 129
+    LLOC: 77
+    SLOC: 106
+    Comments: 0
+    Single comments: 5
+    Multi: 0
+    Blank: 18
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+genai_llm/embeddings/providers.py
+    LOC: 216
+    LLOC: 164
+    SLOC: 175
+    Comments: 0
+    Single comments: 16
+    Multi: 0
+    Blank: 25
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+genai_llm/embeddings/__init__.py
+    LOC: 6
+    LLOC: 4
+    SLOC: 3
+    Comments: 0
+    Single comments: 1
+    Multi: 0
+    Blank: 2
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+utils/cache_utils.py
+    LOC: 20
+    LLOC: 17
+    SLOC: 16
+    Comments: 0
+    Single comments: 1
+    Multi: 0
+    Blank: 3
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+utils/clean_caches.py
+    LOC: 32
+    LLOC: 16
+    SLOC: 22
+    Comments: 1
+    Single comments: 3
+    Multi: 0
+    Blank: 7
+    - Comment Stats
+        (C % L): 3%
+        (C % S): 5%
+        (C + M % L): 3%
+utils/clean_output.py
+    LOC: 26
+    LLOC: 14
+    SLOC: 16
+    Comments: 1
+    Single comments: 3
+    Multi: 0
+    Blank: 7
+    - Comment Stats
+        (C % L): 4%
+        (C % S): 6%
+        (C + M % L): 4%
+utils/compare_genai_configs.py
+    LOC: 265
+    LLOC: 153
+    SLOC: 216
+    Comments: 1
+    Single comments: 12
+    Multi: 0
+    Blank: 37
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+utils/generate_diagrams.py
+    LOC: 77
+    LLOC: 41
+    SLOC: 57
+    Comments: 1
+    Single comments: 5
+    Multi: 0
+    Blank: 15
+    - Comment Stats
+        (C % L): 1%
+        (C % S): 2%
+        (C + M % L): 1%
+utils/generate_metrics.py
+    LOC: 74
+    LLOC: 40
+    SLOC: 54
+    Comments: 1
+    Single comments: 5
+    Multi: 0
+    Blank: 15
+    - Comment Stats
+        (C % L): 1%
+        (C % S): 2%
+        (C + M % L): 1%
+utils/sms_utils.py
+    LOC: 51
+    LLOC: 41
+    SLOC: 37
+    Comments: 0
+    Single comments: 4
+    Multi: 0
+    Blank: 10
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+utils/validation.py
+    LOC: 43
+    LLOC: 31
+    SLOC: 25
+    Comments: 0
+    Single comments: 6
+    Multi: 0
+    Blank: 12
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+utils/__init__.py
+    LOC: 27
+    LLOC: 4
+    SLOC: 26
+    Comments: 0
+    Single comments: 0
+    Multi: 0
+    Blank: 1
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+** Total **
+    LOC: 3720
+    LLOC: 2421
+    SLOC: 2869
+    Comments: 6
+    Single comments: 267
+    Multi: 0
+    Blank: 584
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
