@@ -37,13 +37,9 @@ def load_cluster_dataset(
 
     with np.load(path, allow_pickle=True) as data:
         reduced: np.ndarray = np.asarray(data["reduced"])
-        coords_2d = (
-            np.asarray(data["coords_2d"]) if "coords_2d" in data else None
-        )
+        coords_2d = np.asarray(data["coords_2d"]) if "coords_2d" in data else None
         cluster_ids: np.ndarray = np.asarray(data["cluster_ids"])
-        labels = (
-            np.asarray(data["labels"]).tolist() if "labels" in data else []
-        )
+        labels = np.asarray(data["labels"]).tolist() if "labels" in data else []
         texts = np.asarray(data["texts"]).tolist() if "texts" in data else []
 
         metadata: Optional[Dict[str, Any]] = None

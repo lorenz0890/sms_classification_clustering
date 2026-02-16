@@ -88,6 +88,11 @@ Swap `_openai` for `_gemini` in the filenames to run Gemini-backed configs.
   - `classifier.seed` controls the train/test shuffle and model randomness for reproducibility.
   - `classifier.output` sets the filename for the classifier comparison chart.
   - `classifier.results_output` sets the filename for cached classifier metrics.
+- Classic ML text representation:
+  - Tokenization uses NLTK word tokenization with alphanumeric filtering; stopword removal is optional via `remove_stopwords`.
+  - The classifier vocabulary is the `top_words` most frequent tokens from the training split.
+  - Each SMS is represented as a binary bag-of-words feature map (`has(word)`), not counts or TF-IDF.
+  - Naive Bayes consumes the boolean feature dicts directly; SVM and Logistic Regression use a `DictVectorizer` to convert to a sparse feature matrix.
 - GenAI embeddings:
   - `embeddings.provider` selects `openai` or `gemini`.
   - `embeddings.model` sets the embedding model name for the provider (Gemini embedContent uses `models/gemini-embedding-001` by default).
