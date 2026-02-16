@@ -93,6 +93,7 @@ Swap `_openai` for `_gemini` in the filenames to run Gemini-backed configs.
 ```bash
 ./run_all_configs.sh
 ./run_all_configs.sh --clean-cache
+./run_all_configs.sh --clean-output
 ./run_all_configs.sh --genai-provider openai
 ./run_all_configs.sh --genai-provider gemini --clean-cache
 ./run_all_configs.sh --configs-dir configs --clean-cache

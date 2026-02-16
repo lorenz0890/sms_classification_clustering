@@ -1,50 +1,49 @@
 ************* Module genai_llm.facade
 genai_llm/facade.py:15:0: R0903: Too few public methods (1/2) (too-few-public-methods)
 ************* Module genai_llm.cluster.analyze
-genai_llm/cluster/analyze.py:52:4: R0913: Too many arguments (6/5) (too-many-arguments)
-genai_llm/cluster/analyze.py:80:4: R0914: Too many local variables (22/15) (too-many-locals)
-genai_llm/cluster/analyze.py:122:25: R1735: Consider using '{"boxstyle": 'round,pad=0.15', "facecolor": 'white', "alpha": 0.65, ... }' instead of a call to 'dict'. (use-dict-literal)
-genai_llm/cluster/analyze.py:130:4: R0914: Too many local variables (21/15) (too-many-locals)
-genai_llm/cluster/analyze.py:148:12: C0415: Import outside toplevel (matplotlib.pyplot) (import-outside-toplevel)
+genai_llm/cluster/analyze.py:39:4: R0913: Too many arguments (6/5) (too-many-arguments)
+genai_llm/cluster/analyze.py:67:4: R0914: Too many local variables (22/15) (too-many-locals)
+genai_llm/cluster/analyze.py:109:25: R1735: Consider using '{"boxstyle": 'round,pad=0.15', "facecolor": 'white', "alpha": 0.65, ... }' instead of a call to 'dict'. (use-dict-literal)
 genai_llm/cluster/analyze.py:32:0: R0903: Too few public methods (1/2) (too-few-public-methods)
 ************* Module genai_llm.cluster.compute
 genai_llm/cluster/compute.py:35:0: R0903: Too few public methods (1/2) (too-few-public-methods)
 ************* Module genai_llm.cluster.data_loader
-genai_llm/cluster/data_loader.py:27:0: R0914: Too many local variables (16/15) (too-many-locals)
+genai_llm/cluster/data_loader.py:45:0: R0913: Too many arguments (6/5) (too-many-arguments)
 ************* Module genai_llm.cluster.metrics
 genai_llm/cluster/metrics.py:40:0: R0902: Too many instance attributes (9/7) (too-many-instance-attributes)
 genai_llm/cluster/metrics.py:68:0: R0914: Too many local variables (32/15) (too-many-locals)
 ************* Module genai_llm.cluster.plotting
 genai_llm/cluster/plotting.py:71:17: R1735: Consider using '{"boxstyle": 'round,pad=0.25', "facecolor": 'white', "alpha": 0.8}' instead of a call to 'dict'. (use-dict-literal)
+************* Module genai_llm.cluster.rendering
+genai_llm/cluster/rendering.py:53:8: C0415: Import outside toplevel (matplotlib.pyplot) (import-outside-toplevel)
 ************* Module genai_llm.cluster.reporting
 genai_llm/cluster/reporting.py:20:0: R0913: Too many arguments (8/5) (too-many-arguments)
 genai_llm/cluster/reporting.py:20:0: R0914: Too many local variables (17/15) (too-many-locals)
 genai_llm/cluster/reporting.py:77:4: W1514: Using open without explicitly specifying an encoding (unspecified-encoding)
 ************* Module genai_llm.cluster.visualize
-genai_llm/cluster/visualize.py:43:4: R0914: Too many local variables (18/15) (too-many-locals)
-genai_llm/cluster/visualize.py:54:12: C0415: Import outside toplevel (matplotlib.pyplot) (import-outside-toplevel)
-genai_llm/cluster/visualize.py:23:0: R0903: Too few public methods (1/2) (too-few-public-methods)
+genai_llm/cluster/visualize.py:22:0: R0903: Too few public methods (1/2) (too-few-public-methods)
 ************* Module genai_llm.embeddings.compute
+genai_llm/embeddings/compute.py:111:4: R0913: Too many arguments (6/5) (too-many-arguments)
 genai_llm/embeddings/compute.py:18:0: R0903: Too few public methods (1/2) (too-few-public-methods)
 ************* Module genai_llm.embeddings.providers
 genai_llm/embeddings/providers.py:72:12: C0415: Import outside toplevel (google.generativeai) (import-outside-toplevel)
 genai_llm/embeddings/providers.py:152:19: W0718: Catching too general exception Exception (broad-exception-caught)
 ************* Module classic_ml.classifier
 classic_ml/classifier.py:40:8: W1514: Using open without explicitly specifying an encoding (unspecified-encoding)
-classic_ml/classifier.py:43:4: R0914: Too many local variables (29/15) (too-many-locals)
+classic_ml/classifier.py:84:4: R0914: Too many local variables (23/15) (too-many-locals)
 classic_ml/classifier.py:21:0: R0903: Too few public methods (1/2) (too-few-public-methods)
 ************* Module classic_ml.config
 classic_ml/config.py:85:0: R0902: Too many instance attributes (9/7) (too-many-instance-attributes)
 ************* Module classic_ml.facade
 classic_ml/facade.py:13:0: R0903: Too few public methods (1/2) (too-few-public-methods)
 ************* Module classic_ml.ngrams
-classic_ml/ngrams.py:18:0: R0903: Too few public methods (1/2) (too-few-public-methods)
+classic_ml/ngrams.py:17:0: R0903: Too few public methods (1/2) (too-few-public-methods)
 ************* Module classic_ml.plotting
 classic_ml/plotting.py:17:8: C0415: Import outside toplevel (matplotlib.pyplot) (import-outside-toplevel)
 classic_ml/plotting.py:62:0: R0914: Too many local variables (19/15) (too-many-locals)
 classic_ml/plotting.py:69:8: C0415: Import outside toplevel (matplotlib.pyplot) (import-outside-toplevel)
 ************* Module classic_ml.words
-classic_ml/words.py:16:0: R0903: Too few public methods (1/2) (too-few-public-methods)
+classic_ml/words.py:15:0: R0903: Too few public methods (1/2) (too-few-public-methods)
 ************* Module classic_ml.classifiers.base
 classic_ml/classifiers/base.py:19:0: R0902: Too many instance attributes (10/7) (too-many-instance-attributes)
 ************* Module utils
@@ -57,11 +56,14 @@ utils/compare_genai_configs.py:182:8: C0415: Import outside toplevel (matplotlib
 utils/sms_utils.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 ************* Module utils.validation
 utils/validation.py:1:0: R0801: Similar lines in 2 files
-==genai_llm.cluster.analyze:[201:232]
-==genai_llm.cluster.visualize:[91:122]
+==genai_llm.cluster.analyze:[171:196]
+==genai_llm.cluster.visualize:[60:85]
         legends = plotter.add_legends()
         output_path = build_output_path(
-            self._config.output, algorithm_id, reduction_id, provider_id
+            self._config.output,
+            context.algorithm_id,
+            context.reduction_id,
+            context.provider_id,
         )
         plotter.save(output_path, legends)
         report_path = write_cluster_report(
@@ -74,75 +76,30 @@ utils/validation.py:1:0: R0801: Similar lines in 2 files
                 "params": self._config.reduce.params,
                 "dims": self._config.reduce.dims,
             },
-            algorithm_id=algorithm_id,
-            reduction_id=reduction_id,
-            provider_id=provider_id,
+            algorithm_id=context.algorithm_id,
+            reduction_id=context.reduction_id,
+            provider_id=context.provider_id,
         )
 
-        messages = (
-            dataset.metadata.get("num_messages")
-            if isinstance(dataset.metadata, dict)
-            else len(dataset.labels)
-        )
-        clusters_count = len(plot_data.unique_clusters())
-        num_noise = int((dataset.cluster_ids == -1).sum())
-        print(f"messages={messages} clusters={clusters_count} noise={num_noise}")
-        print(f"wrote {output_path}")
-        print(f"wrote {report_path}")
+        print_plot_summary(dataset, plot_data, output_path, report_path)
         return 0 (duplicate-code)
 utils/validation.py:1:0: R0801: Similar lines in 2 files
-==genai_llm.cluster.analyze:[167:197]
-==genai_llm.cluster.visualize:[61:91]
+==genai_llm.cluster.analyze:[153:167]
+==genai_llm.cluster.visualize:[46:60]
         plt.figure(figsize=(9.72, 7.776))
-        plot_data = ClusterPlotData(
-            coords=dataset.coords,
-            cluster_ids=dataset.cluster_ids,
-            labels=dataset.labels,
-        )
-        plotter = ClusterPlotter(plt, plot_data)
+        plotter, plot_data = build_plotter(plt, dataset)
         plotter.draw_scatter()
-
-        algorithm = "HDBSCAN"
-        algorithm_id: Optional[str] = None
-        if isinstance(dataset.metadata, dict):
-            algorithm = dataset.metadata.get("cluster_algorithm") or algorithm
-            algorithm_id = dataset.metadata.get(
-                "cluster_algorithm_id"
-            ) or dataset.metadata.get("cluster_algorithm")
-        reduction_id = resolve_reduction_id(
-            self._config.coords_source, self._config.reduce.algorithm, dataset.metadata
+        context = build_plot_context(
+            self._config.coords_source,
+            self._config.reduce.algorithm,
+            dataset.metadata,
         )
-        provider_id = resolve_provider_id(dataset.metadata)
-        reduction_name = format_reduction_name(reduction_id)
-        embedding_label = format_embedding_label(dataset.metadata)
-        plt.title(f"SMS Clusters ({algorithm} + {reduction_name} on {embedding_label})")
-        plt.xlabel("Component 1")
-        plt.ylabel("Component 2")
+        apply_plot_labels(plt, context)
 
         metrics = compute_cluster_metrics(
             dataset.coords, dataset.cluster_ids, dataset.labels
         )
         plotter.add_metrics_box(metrics.text()) (duplicate-code)
-utils/validation.py:1:0: R0801: Similar lines in 2 files
-==genai_llm.cluster.analyze:[36:60]
-==genai_llm.cluster.visualize:[27:44]
-        self._config = config
-
-    def _load_dataset(self) -> Optional[ClusterDataset]:
-        """Load the clustering dataset from disk."""
-        try:
-            return load_cluster_dataset(
-                self._config.input,
-                self._config.coords_source,
-                self._config.reduce.algorithm,
-                self._config.reduce.params,
-            )
-        except FileNotFoundError as exc:
-            print(str(exc), file=sys.stderr)
-            return None
-
-    def run(self) -> int:
-        """Render the cluster visualization and save it to disk.""" (duplicate-code)
 utils/validation.py:1:0: R0801: Similar lines in 2 files
 ==classic_ml.facade:[73:82]
 ==genai_llm.facade:[120:129]
@@ -156,33 +113,31 @@ utils/validation.py:1:0: R0801: Similar lines in 2 files
                 return exit_code
         return 0 (duplicate-code)
 utils/validation.py:1:0: R0801: Similar lines in 2 files
-==genai_llm.cluster.analyze:[144:155]
-==genai_llm.cluster.visualize:[50:61]
-            return 1
-
+==classic_ml.ngrams:[36:45]
+==classic_ml.words:[29:38]
+        self._config.validate()
         try:
-            import matplotlib.pyplot as plt
-        except ImportError:
-            print(
-                "Missing matplotlib. Install it in your venv to generate plots.",
-                file=sys.stderr,
+            path, stopwords_set = load_dataset(
+                self._config.path, self._config.remove_stopwords
             )
+        except FileNotFoundError as exc:
+            print(str(exc), file=sys.stderr)
             return 1
  (duplicate-code)
 utils/validation.py:1:0: R0801: Similar lines in 2 files
-==classic_ml.ngrams:[46:54]
-==classic_ml.words:[39:47]
-        self._config.validate()
-        path = pathlib.Path(self._config.path)
-        if not path.exists():
-            print(f"File not found: {path}", file=sys.stderr)
-            return 1
-
-        ensure_nltk_data(include_stopwords=self._config.remove_stopwords)
-        stopwords_set = load_stopwords() if self._config.remove_stopwords else None (duplicate-code)
+==genai_llm.cluster.analyze:[126:134]
+==genai_llm.cluster.visualize:[31:39]
+        dataset = load_dataset_or_warn(
+            self._config.input,
+            self._config.coords_source,
+            self._config.reduce.algorithm,
+            self._config.reduce.params,
+        )
+        if dataset is None:
+            return 1 (duplicate-code)
 utils/validation.py:1:0: R0801: Similar lines in 2 files
-==classic_ml.classifier:[114:121]
-==classic_ml.ngrams:[67:74]
+==classic_ml.classifier:[142:149]
+==classic_ml.ngrams:[58:65]
             print(
                 "Missing matplotlib. Install it in your venv to generate plots.",
                 file=sys.stderr,
@@ -191,14 +146,17 @@ utils/validation.py:1:0: R0801: Similar lines in 2 files
         print(f"wrote {self._config.output}")
         return 0 (duplicate-code)
 utils/validation.py:1:0: R0801: Similar lines in 2 files
-==classic_ml.ngrams:[29:35]
-==classic_ml.words:[27:33]
-            "ham": collections.Counter(),
-            "spam": collections.Counter(),
-        }
-        for label, msg in iter_labeled_messages(path):
-            if label not in counters:
-                continue (duplicate-code)
+==genai_llm.cluster.compute:[45:54]
+==genai_llm.embeddings.compute:[39:48]
+        if "metadata" not in data:
+            return None
+        try:
+            return json.loads(str(data["metadata"].item()))
+        except (ValueError, TypeError):
+            return None
+
+    def run(self) -> int:
+        """Run clustering and save outputs to disk.""" (duplicate-code)
 utils/validation.py:1:0: R0801: Similar lines in 2 files
 ==classic_ml.config:[175:184]
 ==genai_llm.config:[326:335]
@@ -239,20 +197,11 @@ utils/validation.py:1:0: R0801: Similar lines in 2 files
 
 def main() -> int:
     """Entry point for report aggregation.""" (duplicate-code)
-utils/validation.py:1:0: R0801: Similar lines in 2 files
-==classic_ml.classifier:[46:52]
-==genai_llm.embeddings.compute:[90:96]
-        path = pathlib.Path(self._config.path)
-        if not path.exists():
-            print(f"File not found: {path}", file=sys.stderr)
-            return 1
-
-        data = list(iter_labeled_messages(path)) (duplicate-code)
 
 
 Report
 ======
-1901 statements analysed.
+1947 statements analysed.
 
 Statistics by type
 ------------------
@@ -260,13 +209,13 @@ Statistics by type
 +---------+-------+-----------+-----------+------------+---------+
 |type     |number |old number |difference |%documented |%badname |
 +=========+=======+===========+===========+============+=========+
-|module   |41     |NC         |NC         |92.68       |0.00     |
+|module   |43     |41         |+2.00      |93.02       |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
-|class    |43     |NC         |NC         |100.00      |0.00     |
+|class    |44     |43         |+1.00      |100.00      |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
-|method   |124    |NC         |NC         |100.00      |0.00     |
+|method   |131    |124        |+7.00      |100.00      |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
-|function |54     |NC         |NC         |100.00      |0.00     |
+|function |66     |54         |+12.00     |100.00      |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
 
 
@@ -283,7 +232,7 @@ External dependencies
     google 
       \-generativeai (genai_llm.embeddings.providers)
     matplotlib 
-      \-pyplot (classic_ml.plotting,genai_llm.cluster.analyze,genai_llm.cluster.visualize,utils.compare_genai_configs)
+      \-pyplot (classic_ml.plotting,genai_llm.cluster.rendering,utils.compare_genai_configs)
     nltk (classic_ml.classifiers.base,classic_ml.classifiers.naive_bayes,classic_ml.ngrams,genai_llm.cluster.analyze,utils.sms_utils)
       \-corpus (utils.sms_utils)
     numpy (classic_ml.plotting,genai_llm.algorithms.clustering,genai_llm.algorithms.reduction,genai_llm.cluster.analyze,genai_llm.cluster.compute,genai_llm.cluster.data_loader,genai_llm.cluster.metrics,genai_llm.cluster.plotting,genai_llm.embeddings.compute,genai_llm.embeddings.providers)
@@ -295,11 +244,11 @@ External dependencies
       \-linear_model (classic_ml.classifiers.logistic_regression)
       \-metrics (genai_llm.cluster.metrics)
       \-svm (classic_ml.classifiers.svm)
-    utils (classic_ml.classifier,classic_ml.classifiers.base,classic_ml.config,classic_ml.ngrams,classic_ml.words,genai_llm.cluster.analyze,genai_llm.config,genai_llm.embeddings.compute)
+    utils (classic_ml.classifier,classic_ml.classifiers.base,classic_ml.config,classic_ml.ngrams,classic_ml.text_stats,classic_ml.words,genai_llm.cluster.analyze,genai_llm.config,genai_llm.embeddings.compute)
 
 
 
-3735 lines have been analyzed
+3928 lines have been analyzed
 
 Raw metrics
 -----------
@@ -307,13 +256,13 @@ Raw metrics
 +----------+-------+------+---------+-----------+
 |type      |number |%     |previous |difference |
 +==========+=======+======+=========+===========+
-|code      |2672   |71.54 |NC       |NC         |
+|code      |2813   |71.61 |2672     |+141.00    |
 +----------+-------+------+---------+-----------+
-|docstring |478    |12.80 |NC       |NC         |
+|docstring |497    |12.65 |478      |+19.00     |
 +----------+-------+------+---------+-----------+
-|comment   |5      |0.13  |NC       |NC         |
+|comment   |5      |0.13  |5        |=          |
 +----------+-------+------+---------+-----------+
-|empty     |580    |15.53 |NC       |NC         |
+|empty     |613    |15.61 |580      |+33.00     |
 +----------+-------+------+---------+-----------+
 
 
@@ -324,9 +273,9 @@ Duplication
 +-------------------------+------+---------+-----------+
 |                         |now   |previous |difference |
 +=========================+======+=========+===========+
-|nb duplicated lines      |0     |NC       |NC         |
+|nb duplicated lines      |0     |0        |0          |
 +-------------------------+------+---------+-----------+
-|percent duplicated lines |0.000 |NC       |NC         |
+|percent duplicated lines |0.000 |0.000    |=          |
 +-------------------------+------+---------+-----------+
 
 
@@ -337,13 +286,13 @@ Messages by category
 +-----------+-------+---------+-----------+
 |type       |number |previous |difference |
 +===========+=======+=========+===========+
-|convention |9      |NC       |NC         |
+|convention |8      |9        |9          |
 +-----------+-------+---------+-----------+
-|refactor   |36     |NC       |NC         |
+|refactor   |33     |36       |36         |
 +-----------+-------+---------+-----------+
-|warning    |3      |NC       |NC         |
+|warning    |3      |3        |3          |
 +-----------+-------+---------+-----------+
-|error      |0      |NC       |NC         |
+|error      |0      |0        |0          |
 +-----------+-------+---------+-----------+
 
 
@@ -354,49 +303,51 @@ Messages by category
 +-------------------------------+------+--------+---------+-----------+
 |module                         |error |warning |refactor |convention |
 +===============================+======+========+=========+===========+
-|genai_llm.cluster.reporting    |0.00  |33.33   |5.56     |0.00       |
+|genai_llm.cluster.reporting    |0.00  |33.33   |6.06     |0.00       |
 +-------------------------------+------+--------+---------+-----------+
-|classic_ml.classifier          |0.00  |33.33   |5.56     |0.00       |
+|classic_ml.classifier          |0.00  |33.33   |6.06     |0.00       |
 +-------------------------------+------+--------+---------+-----------+
-|genai_llm.embeddings.providers |0.00  |33.33   |0.00     |11.11      |
+|genai_llm.embeddings.providers |0.00  |33.33   |0.00     |12.50      |
 +-------------------------------+------+--------+---------+-----------+
-|utils.validation               |0.00  |0.00    |33.33    |0.00       |
+|utils.validation               |0.00  |0.00    |30.30    |0.00       |
 +-------------------------------+------+--------+---------+-----------+
-|genai_llm.cluster.analyze      |0.00  |0.00    |13.89    |11.11      |
+|genai_llm.cluster.analyze      |0.00  |0.00    |12.12    |0.00       |
 +-------------------------------+------+--------+---------+-----------+
-|genai_llm.cluster.visualize    |0.00  |0.00    |5.56     |11.11      |
+|genai_llm.embeddings.compute   |0.00  |0.00    |6.06     |0.00       |
 +-------------------------------+------+--------+---------+-----------+
-|genai_llm.cluster.metrics      |0.00  |0.00    |5.56     |0.00       |
+|genai_llm.cluster.metrics      |0.00  |0.00    |6.06     |0.00       |
 +-------------------------------+------+--------+---------+-----------+
-|classic_ml.plotting            |0.00  |0.00    |2.78     |22.22      |
+|classic_ml.plotting            |0.00  |0.00    |3.03     |25.00      |
 +-------------------------------+------+--------+---------+-----------+
-|genai_llm.facade               |0.00  |0.00    |2.78     |0.00       |
+|genai_llm.facade               |0.00  |0.00    |3.03     |0.00       |
 +-------------------------------+------+--------+---------+-----------+
-|genai_llm.embeddings.compute   |0.00  |0.00    |2.78     |0.00       |
+|genai_llm.cluster.visualize    |0.00  |0.00    |3.03     |0.00       |
 +-------------------------------+------+--------+---------+-----------+
-|genai_llm.cluster.plotting     |0.00  |0.00    |2.78     |0.00       |
+|genai_llm.cluster.plotting     |0.00  |0.00    |3.03     |0.00       |
 +-------------------------------+------+--------+---------+-----------+
-|genai_llm.cluster.data_loader  |0.00  |0.00    |2.78     |0.00       |
+|genai_llm.cluster.data_loader  |0.00  |0.00    |3.03     |0.00       |
 +-------------------------------+------+--------+---------+-----------+
-|genai_llm.cluster.compute      |0.00  |0.00    |2.78     |0.00       |
+|genai_llm.cluster.compute      |0.00  |0.00    |3.03     |0.00       |
 +-------------------------------+------+--------+---------+-----------+
-|classic_ml.words               |0.00  |0.00    |2.78     |0.00       |
+|classic_ml.words               |0.00  |0.00    |3.03     |0.00       |
 +-------------------------------+------+--------+---------+-----------+
-|classic_ml.ngrams              |0.00  |0.00    |2.78     |0.00       |
+|classic_ml.ngrams              |0.00  |0.00    |3.03     |0.00       |
 +-------------------------------+------+--------+---------+-----------+
-|classic_ml.facade              |0.00  |0.00    |2.78     |0.00       |
+|classic_ml.facade              |0.00  |0.00    |3.03     |0.00       |
 +-------------------------------+------+--------+---------+-----------+
-|classic_ml.config              |0.00  |0.00    |2.78     |0.00       |
+|classic_ml.config              |0.00  |0.00    |3.03     |0.00       |
 +-------------------------------+------+--------+---------+-----------+
-|classic_ml.classifiers.base    |0.00  |0.00    |2.78     |0.00       |
+|classic_ml.classifiers.base    |0.00  |0.00    |3.03     |0.00       |
 +-------------------------------+------+--------+---------+-----------+
-|utils.sms_utils                |0.00  |0.00    |0.00     |11.11      |
+|utils.sms_utils                |0.00  |0.00    |0.00     |12.50      |
 +-------------------------------+------+--------+---------+-----------+
-|utils.compare_genai_configs    |0.00  |0.00    |0.00     |11.11      |
+|utils.compare_genai_configs    |0.00  |0.00    |0.00     |12.50      |
 +-------------------------------+------+--------+---------+-----------+
-|utils.cache_utils              |0.00  |0.00    |0.00     |11.11      |
+|utils.cache_utils              |0.00  |0.00    |0.00     |12.50      |
 +-------------------------------+------+--------+---------+-----------+
-|utils                          |0.00  |0.00    |0.00     |11.11      |
+|utils                          |0.00  |0.00    |0.00     |12.50      |
++-------------------------------+------+--------+---------+-----------+
+|genai_llm.cluster.rendering    |0.00  |0.00    |0.00     |12.50      |
 +-------------------------------+------+--------+---------+-----------+
 
 
@@ -407,13 +358,15 @@ Messages
 +-----------------------------+------------+
 |message id                   |occurrences |
 +=============================+============+
-|duplicate-code               |12          |
+|duplicate-code               |10          |
 +-----------------------------+------------+
 |too-few-public-methods       |9           |
 +-----------------------------+------------+
-|too-many-locals              |8           |
+|too-many-locals              |5           |
 +-----------------------------+------------+
-|import-outside-toplevel      |6           |
+|import-outside-toplevel      |5           |
++-----------------------------+------------+
+|too-many-arguments           |4           |
 +-----------------------------+------------+
 |too-many-instance-attributes |3           |
 +-----------------------------+------------+
@@ -423,14 +376,12 @@ Messages
 +-----------------------------+------------+
 |unspecified-encoding         |2           |
 +-----------------------------+------------+
-|too-many-arguments           |2           |
-+-----------------------------+------------+
 |broad-exception-caught       |1           |
 +-----------------------------+------------+
 
 
 
 
------------------------------------
-Your code has been rated at 9.75/10
+------------------------------------------------------------------
+Your code has been rated at 9.77/10 (previous run: 9.75/10, +0.03)
 

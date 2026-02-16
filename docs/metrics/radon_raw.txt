@@ -11,13 +11,13 @@ main.py
         (C % S): 0%
         (C + M % L): 0%
 classic_ml/classifier.py
-    LOC: 121
-    LLOC: 79
-    SLOC: 97
+    LOC: 149
+    LLOC: 91
+    SLOC: 121
     Comments: 0
-    Single comments: 5
+    Single comments: 8
     Multi: 0
-    Blank: 19
+    Blank: 20
     - Comment Stats
         (C % L): 0%
         (C % S): 0%
@@ -47,9 +47,9 @@ classic_ml/facade.py
         (C % S): 0%
         (C + M % L): 0%
 classic_ml/ngrams.py
-    LOC: 74
-    LLOC: 55
-    SLOC: 56
+    LOC: 65
+    LLOC: 46
+    SLOC: 47
     Comments: 0
     Single comments: 6
     Multi: 0
@@ -70,10 +70,22 @@ classic_ml/plotting.py
         (C % L): 0%
         (C % S): 0%
         (C + M % L): 0%
+classic_ml/text_stats.py
+    LOC: 42
+    LLOC: 25
+    SLOC: 30
+    Comments: 0
+    Single comments: 3
+    Multi: 0
+    Blank: 9
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
 classic_ml/words.py
-    LOC: 64
-    LLOC: 47
-    SLOC: 49
+    LOC: 55
+    LLOC: 38
+    SLOC: 40
     Comments: 0
     Single comments: 5
     Multi: 0
@@ -95,13 +107,13 @@ classic_ml/__init__.py
         (C % S): 0%
         (C + M % L): 0%
 classic_ml/classifiers/base.py
-    LOC: 142
-    LLOC: 105
-    SLOC: 99
+    LOC: 152
+    LLOC: 109
+    SLOC: 106
     Comments: 0
-    Single comments: 16
+    Single comments: 17
     Multi: 0
-    Blank: 27
+    Blank: 29
     - Comment Stats
         (C % L): 0%
         (C % S): 0%
@@ -251,13 +263,13 @@ genai_llm/algorithms/__init__.py
         (C % S): 0%
         (C + M % L): 0%
 genai_llm/cluster/analyze.py
-    LOC: 232
-    LLOC: 129
-    SLOC: 197
+    LOC: 196
+    LLOC: 102
+    SLOC: 165
     Comments: 0
-    Single comments: 9
+    Single comments: 8
     Multi: 0
-    Blank: 26
+    Blank: 23
     - Comment Stats
         (C % L): 0%
         (C % S): 0%
@@ -275,13 +287,13 @@ genai_llm/cluster/compute.py
         (C % S): 0%
         (C + M % L): 0%
 genai_llm/cluster/data_loader.py
-    LOC: 76
-    LLOC: 50
-    SLOC: 60
+    LOC: 107
+    LLOC: 61
+    SLOC: 83
     Comments: 0
-    Single comments: 3
+    Single comments: 6
     Multi: 0
-    Blank: 13
+    Blank: 18
     - Comment Stats
         (C % L): 0%
         (C % S): 0%
@@ -322,6 +334,18 @@ genai_llm/cluster/plotting.py
         (C % L): 0%
         (C % S): 0%
         (C + M % L): 0%
+genai_llm/cluster/rendering.py
+    LOC: 129
+    LLOC: 69
+    SLOC: 103
+    Comments: 0
+    Single comments: 8
+    Multi: 0
+    Blank: 18
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
 genai_llm/cluster/reporting.py
     LOC: 78
     LLOC: 31
@@ -335,13 +359,13 @@ genai_llm/cluster/reporting.py
         (C % S): 0%
         (C + M % L): 0%
 genai_llm/cluster/visualize.py
-    LOC: 122
-    LLOC: 68
-    SLOC: 104
+    LOC: 85
+    LLOC: 40
+    SLOC: 71
     Comments: 0
-    Single comments: 5
+    Single comments: 4
     Multi: 0
-    Blank: 13
+    Blank: 10
     - Comment Stats
         (C % L): 0%
         (C % S): 0%
@@ -359,13 +383,13 @@ genai_llm/cluster/__init__.py
         (C % S): 0%
         (C + M % L): 0%
 genai_llm/embeddings/compute.py
-    LOC: 129
-    LLOC: 77
-    SLOC: 106
+    LOC: 157
+    LLOC: 98
+    SLOC: 124
     Comments: 0
-    Single comments: 5
+    Single comments: 11
     Multi: 0
-    Blank: 18
+    Blank: 22
     - Comment Stats
         (C % L): 0%
         (C % S): 0%
@@ -455,9 +479,9 @@ utils/generate_diagrams.py
         (C % S): 2%
         (C + M % L): 1%
 utils/generate_metrics.py
-    LOC: 74
+    LOC: 86
     LLOC: 40
-    SLOC: 54
+    SLOC: 66
     Comments: 1
     Single comments: 5
     Multi: 0
@@ -503,13 +527,13 @@ utils/__init__.py
         (C % S): 0%
         (C + M % L): 0%
 ** Total **
-    LOC: 3720
-    LLOC: 2421
-    SLOC: 2869
+    LOC: 3909
+    LLOC: 2490
+    SLOC: 3003
     Comments: 6
-    Single comments: 267
+    Single comments: 289
     Multi: 0
-    Blank: 584
+    Blank: 617
     - Comment Stats
         (C % L): 0%
         (C % S): 0%
